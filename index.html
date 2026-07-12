@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#667eea">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>SANDRO MULTIAPP PRO</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Orbitron:wght@400;700;900&family=Space+Mono&family=Bebas+Neue&family=Audiowide&family=Major+Mono+Display&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --font:'Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;
+  --font-display:'Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;
+  --scale:1;
+  --accent:#4ade80;
+  --glass:rgba(255,255,255,.12);
+  --border:rgba(255,255,255,.2)
+}
+html,body{height:100%;width:100%;overflow:hidden;font-family:var(--font);color:#fff;user-select:none;background:#000}
+.bg-gradient{position:fixed;inset:0;z-index:-3;background-image:linear-gradient(135deg,#667eea,#764ba2);background-size:400% 400%;animation:bgShift 20s ease infinite}
+@keyframes bgShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.bg-image{position:fixed;inset:0;z-index:-2;background-size:cover;background-position:center;opacity:0;transition:opacity .6s}
+.bg-image.visible{opacity:1}
+
+/* HEADER */
+.app-header{display:flex;align-items:center;justify-content:center;gap:14px;padding:14px 16px}
+.app-logo{width:52px;height:52px;flex-shrink:0;background:linear-gradient(135deg,#667eea 0%,#764ba2 50%,#f093fb 100%);border-radius:14px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(102,126,234,.5),0 0 0 2px rgba(255,255,255,.15);position:relative;overflow:hidden;animation:logoPulse 3s ease-in-out infinite}
+@keyframes logoPulse{0%,100%{transform:scale(1);box-shadow:0 8px 24px rgba(102,126,234,.5),0 0 0 2px rgba(255,255,255,.15)}50%{transform:scale(1.06);box-shadow:0 12px 32px rgba(240,147,251,.7),0 0 0 3px rgba(255,255,255,.25)}}
+.app-logo::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.4) 0%,transparent 50%)}
+.app-logo svg{width:30px;height:30px;position:relative;z-index:1;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4))}
+.header-text{text-align:left}
+.app-title{font-family:var(--font-display);font-size:calc(20px * var(--scale));font-weight:800;letter-spacing:2.5px;text-transform:uppercase;background:linear-gradient(135deg,#fff 0%,#4ade80 40%,#22d3ee 70%,#fff 100%);background-size:200% 200%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:titleGradient 4s ease infinite;line-height:1.1}
+@keyframes titleGradient{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.app-subtitle{font-family:var(--font);font-size:calc(9px * var(--scale));color:rgba(255,255,255,.7);letter-spacing:3px;text-transform:uppercase;font-weight:500;margin-top:2px}
+
+.main{position:fixed;inset:0;padding:8px 14px;overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
+.main::-webkit-scrollbar{display:none}
+
+/* OROLOGIO GIGANTE 130px */
+.clock-area{text-align:center;margin:8px 0}
+.date{font-family:var(--font);font-size:calc(17px * var(--scale));font-weight:500;letter-spacing:1.5px;text-transform:capitalize;opacity:.95;margin-bottom:4px}
+.time{font-family:var(--font-display);font-size:calc(130px * var(--scale));font-weight:200;letter-spacing:-6px;line-height:.95;text-shadow:0 4px 40px rgba(0,0,0,.4);transition:all .3s;font-feature-settings:'ss01','cv02','cv11'}
+.time.s-minimal{font-weight:100;letter-spacing:-4px;font-size:calc(105px * var(--scale))}
+.time.s-bold{font-weight:800;letter-spacing:-4px;font-size:calc(120px * var(--scale));font-family:var(--font-display)}
+.time.s-orbitron{font-family:'Orbitron',monospace;letter-spacing:4px;font-size:calc(64px * var(--scale));text-shadow:0 0 25px var(--accent),0 4px 30px rgba(0,0,0,.5)}
+.time.s-neon{font-family:'Audiowide',sans-serif;font-size:calc(85px * var(--scale));text-shadow:0 0 5px #fff,0 0 10px #fff,0 0 25px var(--accent),0 0 50px var(--accent);animation:neonFlicker 3s infinite}
+@keyframes neonFlicker{0%,100%{opacity:1}50%{opacity:.85}}
+.time.s-retro{font-family:'Major Mono Display',monospace;font-size:calc(58px * var(--scale));letter-spacing:4px;background:linear-gradient(180deg,#ffd700,#ff8c00);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.time.s-serif{font-family:'Playfair Display',serif;font-weight:400;font-size:calc(110px * var(--scale));letter-spacing:-4px;font-style:italic}
+.time.s-mono{font-family:'Space Mono',monospace;font-size:calc(75px * var(--scale));letter-spacing:2px}
+.colon{animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.3}}
+
+.analog-clock{width:170px;height:170px;margin:8px auto;position:relative;border-radius:50%;background:rgba(255,255,255,.08);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:2px solid rgba(255,255,255,.2);box-shadow:0 8px 32px rgba(0,0,0,.3);display:none}
+.analog-clock.active{display:block}
+.analog-clock .mark{position:absolute;width:2px;height:10px;background:rgba(255,255,255,.6);top:8px;left:50%;transform-origin:50% 77px}
+.analog-clock .mark.major{height:14px;width:3px;background:#fff}
+.analog-clock .hand{position:absolute;bottom:50%;left:50%;transform-origin:50% 100%;background:#fff;border-radius:2px}
+.analog-clock .hand.h-hour{width:4px;height:42px;margin-left:-2px}
+.analog-clock .hand.h-min{width:3px;height:58px;margin-left:-1.5px}
+.analog-clock .hand.h-sec{width:1.5px;height:68px;margin-left:-.75px;background:var(--accent)}
+.analog-clock .center{position:absolute;width:10px;height:10px;background:var(--accent);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);z-index:2}
+
+.flip-clock{display:none;justify-content:center;gap:6px;margin:12px 0}
+.flip-clock.active{display:flex}
+.flip-unit{background:rgba(0,0,0,.5);backdrop-filter:blur(10px);border-radius:10px;padding:8px 12px;min-width:52px;text-align:center;border:1px solid rgba(255,255,255,.15);position:relative;overflow:hidden}
+.flip-unit::before{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:rgba(0,0,0,.5)}
+.flip-num{font-family:var(--font-display);font-size:calc(32px * var(--scale));font-weight:700;color:var(--accent);text-shadow:0 0 10px var(--accent)}
+.flip-label{font-family:var(--font);font-size:9px;color:rgba(255,255,255,.7);margin-top:2px;letter-spacing:1px}
+
+/* METEO */
+.weather-card{background:var(--glass);backdrop-filter:blur(25px);-webkit-backdrop-filter:blur(25px);border:1px solid var(--border);border-radius:24px;padding:18px;box-shadow:0 8px 32px rgba(0,0,0,.3);margin:10px 0}
+.weather-city-row{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:14px}
+.weather-city{font-family:var(--font-display);font-size:calc(30px * var(--scale));font-weight:700;letter-spacing:.5px;text-shadow:0 2px 15px rgba(0,0,0,.4)}
+.weather-icon-small{font-size:calc(40px * var(--scale));filter:drop-shadow(0 2px 10px rgba(0,0,0,.3));animation:weatherFloat 3s ease-in-out infinite}
+@keyframes weatherFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.weather-main{display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:14px}
+.temp{font-family:var(--font-display);font-size:calc(72px * var(--scale));font-weight:200;line-height:1;text-shadow:0 2px 20px rgba(0,0,0,.3)}
+.desc{font-family:var(--font);font-size:calc(18px * var(--scale));color:rgba(255,255,255,.85);text-transform:capitalize;font-weight:500}
+.weather-details{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding-top:14px;border-top:1px solid rgba(255,255,255,.2)}
+.detail{display:flex;flex-direction:column;align-items:center;font-size:calc(14px * var(--scale));gap:4px}
+.detail-icon{font-size:calc(26px * var(--scale))}
+.detail-value{font-family:var(--font-display);font-weight:700;font-size:calc(16px * var(--scale))}
+.detail-label{font-family:var(--font);font-size:calc(10px * var(--scale));opacity:.7}
+
+/* WIDGET */
+.widgets-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:10px 0}
+.widget-btn{aspect-ratio:1;background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;color:#fff;font-family:inherit;transition:transform .15s,background .2s;position:relative;overflow:hidden}
+.widget-btn::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.2),transparent 60%);pointer-events:none}
+.widget-btn:active{transform:scale(.92);background:rgba(255,255,255,.25)}
+.widget-btn .w-icon{width:42px;height:42px;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 3px 8px rgba(0,0,0,.4))}
+.widget-btn .w-icon svg,.widget-btn .w-icon img{width:100%;height:100%;object-fit:contain}
+.widget-btn .w-label{font-family:var(--font);font-size:calc(10px * var(--scale));font-weight:600;opacity:.95;text-align:center;line-height:1.1;letter-spacing:.3px}
+.widget-btn.has-custom{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);z-index:200;display:flex;align-items:flex-end;justify-content:center}
+.modal-overlay.hidden{display:none}
+.modal{width:100%;max-width:500px;max-height:88vh;background:rgba(25,25,35,.95);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border-radius:24px 24px 0 0;border-top:1px solid rgba(255,255,255,.2);display:flex;flex-direction:column;animation:slideUp .4s}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-header{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.15)}
+.modal-header h3{font-family:var(--font-display);font-size:calc(17px * var(--scale));font-weight:600}
+.modal-close{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.2);border:none;color:white;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.modal-body{flex:1;overflow-y:auto;padding:16px 18px;scrollbar-width:none}
+.modal-body::-webkit-scrollbar{display:none}
+
+.settings-section{background:rgba(255,255,255,.08);border-radius:14px;padding:14px;margin-bottom:12px;border:1px solid rgba(255,255,255,.1)}
+.section-title{font-family:var(--font-display);display:flex;align-items:center;gap:8px;font-size:calc(14px * var(--scale));font-weight:600;margin-bottom:10px}
+.font-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.font-btn{font-family:var(--font);padding:10px 6px;background:rgba(255,255,255,.08);border:2px solid transparent;border-radius:10px;color:white;cursor:pointer;text-align:center;font-size:calc(13px * var(--scale))}
+.font-btn.active{border-color:var(--accent);background:rgba(74,222,128,.2)}
+.font-btn .font-name{font-size:calc(10px * var(--scale));opacity:.7;display:block;margin-top:2px}
+input[type=range]{width:100%;height:6px;-webkit-appearance:none;appearance:none;background:rgba(255,255,255,.2);border-radius:3px;outline:none;margin:10px 0}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--accent);cursor:pointer}
+.style-options{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+.style-btn{font-family:var(--font);padding:10px;background:rgba(255,255,255,.08);border:2px solid transparent;border-radius:10px;color:white;cursor:pointer;font-size:calc(12px * var(--scale))}
+.style-btn.active{border-color:var(--accent);background:rgba(74,222,128,.2)}
+.bg-options{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;margin-bottom:8px}
+.bg-opt{aspect-ratio:1;border-radius:10px;border:3px solid transparent;cursor:pointer}
+.bg-opt.active{border-color:white;transform:scale(1.05)}
+.upload-bg-btn{font-family:var(--font);width:100%;padding:10px;background:rgba(255,255,255,.08);border:1px dashed rgba(255,255,255,.3);border-radius:10px;color:white;cursor:pointer;font-size:calc(12px * var(--scale));margin-top:6px}
+
+.big-display{font-family:var(--font-display);font-size:52px;font-weight:200;text-align:center;padding:16px 0;letter-spacing:2px}
+.big-display .sub{font-size:28px;opacity:.6}
+.btn-row{display:flex;justify-content:center;gap:12px;margin-top:14px;flex-wrap:wrap}
+.big-btn{font-family:var(--font);padding:12px 24px;border-radius:30px;border:none;font-size:14px;font-weight:600;cursor:pointer;color:white}
+.big-btn.primary{background:var(--accent)}
+.big-btn.danger{background:#ef4444}
+.big-btn.secondary{background:rgba(255,255,255,.2)}
+.list-item{background:rgba(255,255,255,.08);border-radius:10px;padding:10px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.list-item .content{flex:1;font-family:var(--font);font-size:13px;line-height:1.4}
+.list-item .time{font-size:10px;color:rgba(255,255,255,.6);margin-top:3px}
+.del-btn{background:rgba(239,68,68,.2);border:none;color:#ef4444;width:26px;height:26px;border-radius:50%;cursor:pointer;flex-shrink:0}
+.input-area{display:flex;gap:8px;margin-top:10px}
+.input-area input,.input-area textarea,.input-area select{font-family:var(--font);flex:1;padding:10px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:10px;color:white;font-size:13px;resize:none;min-height:40px}
+.input-area button{font-family:var(--font);padding:0 16px;background:var(--accent);border:none;border-radius:10px;color:white;font-weight:600;cursor:pointer}
+.info-box{background:rgba(255,255,255,.06);padding:12px;border-radius:10px;margin:8px 0;font-family:var(--font);font-size:13px;line-height:1.6}
+.info-box strong{color:var(--accent)}
+
+.compass{width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.1) 0%,rgba(0,0,0,.3) 100%);border:2px solid rgba(255,255,255,.3);position:relative;margin:0 auto;transition:transform .2s ease-out}
+.compass-direction{font-family:var(--font-display);position:absolute;font-weight:700;font-size:16px;color:white}
+.compass-n{top:10px;left:50%;transform:translateX(-50%);color:#ef4444}
+.compass-s{bottom:10px;left:50%;transform:translateX(-50%)}
+.compass-e{right:10px;top:50%;transform:translateY(-50%)}
+.compass-w{left:10px;top:50%;transform:translateY(-50%)}
+.compass-center{position:absolute;top:50%;left:50%;width:12px;height:12px;background:white;border-radius:50%;transform:translate(-50%,-50%);z-index:2}
+
+.level-bubble{width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.1) 0%,rgba(0,0,0,.3) 100%);border:2px solid rgba(255,255,255,.3);position:relative;overflow:hidden;margin:0 auto}
+.level-bubble::before{content:'';position:absolute;top:50%;left:50%;width:40px;height:40px;border:2px solid rgba(255,255,255,.3);border-radius:50%;transform:translate(-50%,-50%)}
+.level-ball{position:absolute;top:50%;left:50%;width:28px;height:28px;background:radial-gradient(circle,#4ade80 0%,#16a34a 100%);border-radius:50%;transform:translate(-50%,-50%);transition:all .1s ease-out;box-shadow:0 0 20px rgba(74,222,128,.6)}
+
+.calc-display{background:rgba(0,0,0,.4);padding:14px;border-radius:12px;text-align:right;font-family:var(--font-display);font-size:30px;font-weight:300;min-height:60px;word-break:break-all;margin-bottom:10px}
+.calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.calc-btn{font-family:var(--font-display);padding:14px;background:rgba(255,255,255,.1);border:none;border-radius:10px;color:white;font-size:17px;cursor:pointer}
+.calc-btn:active{background:rgba(255,255,255,.3)}
+.calc-btn.op{background:rgba(74,222,128,.3)}
+.calc-btn.eq{background:var(--accent);grid-column:span 2}
+.calc-btn.clr{background:rgba(239,68,68,.3)}
+
+.crypto-item{display:flex;justify-content:space-between;align-items:center;padding:10px;background:rgba(255,255,255,.08);border-radius:10px;margin-bottom:8px}
+.crypto-info{display:flex;align-items:center;gap:10px}
+.crypto-logo{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700}
+.crypto-name{font-family:var(--font-display);font-weight:600;font-size:13px}
+.crypto-symbol{font-family:var(--font);font-size:11px;color:rgba(255,255,255,.7)}
+.crypto-value{font-family:var(--font-display);font-size:15px;font-weight:600;text-align:right}
+.crypto-change{font-family:var(--font-display);font-size:11px;text-align:right}
+.crypto-change.up{color:#4ade80}
+.crypto-change.down{color:#ef4444}
+
+.battery-big{width:140px;height:70px;border:3px solid white;border-radius:10px;padding:5px;position:relative;margin:0 auto 12px}
+.battery-big::after{content:'';position:absolute;right:-10px;top:15px;width:6px;height:35px;background:white;border-radius:0 4px 4px 0}
+.battery-big-fill{height:100%;background:#4ade80;border-radius:4px;transition:width .5s,background .5s}
+
+.counter-display{font-family:var(--font-display);font-size:80px;font-weight:200;text-align:center;padding:16px 0}
+.counter-btn{width:70px;height:70px;border-radius:50%;border:none;font-size:28px;font-weight:700;cursor:pointer;color:white}
+.counter-btn.plus{background:var(--accent)}
+.counter-btn.minus{background:#ef4444}
+.counter-btn.reset{background:rgba(255,255,255,.2);font-size:18px}
+
+.mood-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:12px}
+.mood-btn{aspect-ratio:1;background:rgba(255,255,255,.06);border:2px solid transparent;border-radius:10px;font-size:28px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.mood-btn.active{border-color:var(--accent);background:rgba(74,222,128,.15)}
+
+.color-preview{width:100%;height:100px;border-radius:12px;margin-bottom:10px;border:2px solid rgba(255,255,255,.2)}
+.color-values{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.color-val{font-family:var(--font-display);background:rgba(255,255,255,.08);padding:8px;border-radius:8px;text-align:center;font-size:12px}
+
+.converter-row{display:flex;gap:6px;margin-bottom:8px;align-items:center}
+.converter-row input,.converter-row select{font-family:var(--font);flex:1;padding:9px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:8px;color:white;font-size:13px}
+.converter-result{font-family:var(--font-display);background:rgba(74,222,128,.2);padding:12px;border-radius:10px;text-align:center;font-size:18px;font-weight:600;margin-top:8px}
+
+.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-top:10px}
+.cal-head{font-family:var(--font);font-size:10px;text-align:center;color:rgba(255,255,255,.6);padding:4px 0;font-weight:600}
+.cal-day{font-family:var(--font-display);aspect-ratio:1;background:rgba(255,255,255,.06);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer}
+.cal-day.today{background:var(--accent);font-weight:700}
+.cal-day.other{opacity:.3}
+
+.world-clock-item{background:rgba(255,255,255,.08);border-radius:10px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+.world-city{font-family:var(--font-display);font-size:14px;font-weight:600}
+.world-zone{font-family:var(--font);font-size:11px;color:rgba(255,255,255,.6)}
+.world-time{font-family:var(--font-display);font-size:20px;font-weight:600}
+
+.contact-avatar{width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:16px;flex-shrink:0}
+
+.rec-indicator{display:inline-block;width:12px;height:12px;background:#ef4444;border-radius:50%;animation:recPulse 1s infinite;margin-right:6px}
+@keyframes recPulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+.icon-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.icon-edit-btn{font-family:var(--font);aspect-ratio:1;background:rgba(255,255,255,.08);border:2px solid transparent;border-radius:10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:9px;color:white;padding:6px 4px;position:relative}
+.icon-edit-btn.custom{border-color:var(--accent);background:rgba(74,222,128,.1)}
+.icon-edit-btn img,.icon-edit-btn svg{width:28px;height:28px;object-fit:contain}
+.icon-reset-btn{position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;background:#ef4444;border:none;color:white;font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
+
+.storage-bar{width:100%;height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden;margin-top:6px}
+.storage-fill{height:100%;background:var(--accent);transition:width .3s,background .3s}
+.storage-fill.warning{background:#fbbf24}
+.storage-fill.danger{background:#ef4444}
+
+.loading{display:inline-block;width:20px;height:20px;border:2px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.9);backdrop-filter:blur(10px);padding:12px 20px;border-radius:20px;font-family:var(--font);font-size:13px;z-index:300;animation:toastIn .3s}
+@keyframes toastIn{from{opacity:0;transform:translate(-50%,20px)}to{opacity:1;transform:translate(-50%,0)}}
+
+@media (max-width:380px){
+  .time{font-size:calc(95px * var(--scale))}
+  .time.s-minimal{font-size:calc(80px * var(--scale))}
+  .time.s-bold{font-size:calc(90px * var(--scale))}
+  .weather-details{grid-template-columns:repeat(2,1fr)}
+  .widgets-grid{grid-template-columns:repeat(4,1fr)}
+  .widget-btn .w-icon{width:38px;height:38px}
+  .app-title{font-size:calc(16px * var(--scale))}
+  .icon-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media (min-width:768px){
+  .time{font-size:calc(150px * var(--scale))}
+}
+</style>
+</head>
+<body>
+<div class="bg-gradient" id="bgGradient"></div>
+<div class="bg-image" id="bgImage"></div>
+<div class="main">
+  <div class="app-header">
+    <div class="app-logo">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7v10l10 5 10-5V7L12 2z" fill="rgba(255,255,255,.3)" stroke="white" stroke-width="1.5"/><path d="M12 6L6 9v6l6 3 6-3V9l-6-3z" fill="white" opacity=".9"/><circle cx="12" cy="12" r="2.5" fill="#4ade80"/></svg>
+    </div>
+    <div class="header-text">
+      <div class="app-title">SANDRO MULTIAPP PRO</div>
+      <div class="app-subtitle">Lock Screen & Utilities</div>
+    </div>
+  </div>
+  <div class="clock-area">
+    <div class="date" id="date">--</div>
+    <div class="time" id="timeDisplay"><span id="hours">--</span><span class="colon">:</span><span id="minutes">--</span></div>
+    <div class="analog-clock" id="analogClock">
+      <div class="mark major" style="transform:translateX(-50%) rotate(0deg)"></div>
+      <div class="mark" style="transform:translateX(-50%) rotate(30deg)"></div>
+      <div class="mark" style="transform:translateX(-50%) rotate(60deg)"></div>
+      <div class="mark major" style="transform:translateX(-50%) rotate(90deg)"></div>
+      <div class="mark" style="transform:translateX(-50%) rotate(120deg)"></div>
+      <div class="mark" style="transform:translateX(-50%) rotate(150deg)"></div>
+      <div class="mark major" style="transform:translateX(-50%) rotate(180deg)"></div>
+      <div class="mark" style="transform:translateX(-50%) rotate(210deg)"></div>
+      <div class="mark" style="transform:translateX(-50%) rotate(240deg)"></div>
+      <div class="mark major" style="transform:translateX(-50%) rotate(270deg)"></div>
+      <div class="mark" style="transform:translateX(-50%) rotate(300deg)"></div>
+      <div class="mark" style="transform:translateX(-50%) rotate(330deg)"></div>
+      <div class="hand h-hour" id="handHour"></div>
+      <div class="hand h-min" id="handMinute"></div>
+      <div class="hand h-sec" id="handSecond"></div>
+      <div class="center"></div>
+    </div>
+    <div class="flip-clock" id="flipClock">
+      <div class="flip-unit"><div class="flip-num" id="flipH">00</div><div class="flip-label">ORE</div></div>
+      <div class="flip-unit"><div class="flip-num" id="flipM">00</div><div class="flip-label">MIN</div></div>
+      <div class="flip-unit"><div class="flip-num" id="flipS">00</div><div class="flip-label">SEC</div></div>
+    </div>
+  </div>
+  <div class="weather-card">
+    <div class="weather-city-row">
+      <div class="weather-icon-small" id="weatherIcon">🌤️</div>
+      <div class="weather-city" id="location">Rilevamento...</div>
+    </div>
+    <div class="weather-main">
+      <div class="temp" id="temp">--°</div>
+      <div class="desc" id="weatherDesc">Caricamento...</div>
+    </div>
+    <div class="weather-details">
+      <div class="detail"><span class="detail-icon">💧</span><span class="detail-value" id="humidity">--%</span><span class="detail-label">Umidità</span></div>
+      <div class="detail"><span class="detail-icon">💨</span><span class="detail-value" id="wind">-- km/h</span><span class="detail-label">Vento</span></div>
+      <div class="detail"><span class="detail-icon">🌡️</span><span class="detail-value" id="feelsLike">--°</span><span class="detail-label">Percepita</span></div>
+      <div class="detail"><span class="detail-icon">☀️</span><span class="detail-value" id="uvIndex">--</span><span class="detail-label">UV</span></div>
+    </div>
+  </div>
+  <div class="widgets-grid" id="widgetsGrid"></div>
+</div>
+<div class="modal-overlay hidden" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modalTitle">Titolo</h3>
+      <button class="modal-close" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+const DEFAULT_ICONS = {
+  network: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b82f6"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs><path d="M2 20h3v-4H2zm5 0h3v-8H7zm5 0h3V8h-3zm5 0h3V4h-3z" fill="url(#n1)"/></svg>`,
+  performance: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#10b981"/><stop offset="1" stop-color="#14b8a6"/></linearGradient></defs><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" fill="none" stroke="url(#n2)" stroke-width="2.5"/><path d="M12 6 L12 12 L17 9" stroke="#10b981" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`,
+  location: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ef4444"/><stop offset="1" stop-color="#f97316"/></linearGradient></defs><path d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="url(#n3)"/></svg>`,
+  compass: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f59e0b"/><stop offset="1" stop-color="#ef4444"/></linearGradient></defs><circle cx="12" cy="12" r="10" fill="none" stroke="url(#n4)" stroke-width="2.5"/><path d="M12 2 L14 10 L12 12 L10 10 Z" fill="#ef4444"/><path d="M12 22 L10 14 L12 12 L14 14 Z" fill="#fff"/></svg>`,
+  level: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n5" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#10b981"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs><circle cx="12" cy="12" r="10" fill="none" stroke="url(#n5)" stroke-width="2.5"/><circle cx="12" cy="12" r="6" fill="none" stroke="#10b981" stroke-width="1.5"/><circle cx="12" cy="12" r="2" fill="#10b981"/></svg>`,
+  timer: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n6" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ec4899"/><stop offset="1" stop-color="#f43f5e"/></linearGradient></defs><circle cx="12" cy="13" r="9" fill="none" stroke="url(#n6)" stroke-width="2.5"/><path d="M12 9 L12 13" stroke="#ec4899" stroke-width="3" stroke-linecap="round"/><circle cx="12" cy="17" r="1.5" fill="#f43f5e"/><path d="M9 2 L15 2" stroke="#f43f5e" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+  pomodoro: `<svg viewBox="0 0 24 24"><defs><radialGradient id="n7"><stop offset="0" stop-color="#f87171"/><stop offset="1" stop-color="#dc2626"/></radialGradient></defs><circle cx="12" cy="13" r="8" fill="url(#n7)"/><path d="M12 5 Q10 2 8 3" stroke="#16a34a" stroke-width="2.5" fill="none" stroke-linecap="round"/><ellipse cx="10" cy="4" rx="2.5" ry="1.5" fill="#16a34a"/></svg>`,
+  countdown: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n8" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a855f7"/><stop offset="1" stop-color="#6366f1"/></linearGradient></defs><circle cx="12" cy="12" r="9" fill="none" stroke="url(#n8)" stroke-width="2.5"/><path d="M12 7 L12 12 L15 14" stroke="#a855f7" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`,
+  moon: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n9" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fde047"/><stop offset="1" stop-color="#facc15"/></linearGradient></defs><path d="M20 14 A8 8 0 1 1 10 4 A6 6 0 0 0 20 14 Z" fill="url(#n9)"/></svg>`,
+  mood: `<svg viewBox="0 0 24 24"><defs><radialGradient id="n10"><stop offset="0" stop-color="#fde047"/><stop offset="1" stop-color="#facc15"/></radialGradient></defs><circle cx="12" cy="12" r="10" fill="url(#n10)"/><circle cx="9" cy="10" r="1.5" fill="#1f2937"/><circle cx="15" cy="10" r="1.5" fill="#1f2937"/><path d="M8 14 Q12 18 16 14" stroke="#1f2937" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`,
+  ruler: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n11" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f97316"/><stop offset="1" stop-color="#ea580c"/></linearGradient></defs><rect x="2" y="9" width="20" height="6" rx="1" fill="none" stroke="url(#n11)" stroke-width="2.5"/><path d="M5 9 L5 12 M8 9 L8 11 M11 9 L11 12 M14 9 L14 11 M17 9 L17 12 M20 9 L20 11" stroke="#f97316" stroke-width="2" stroke-linecap="round"/></svg>`,
+  calendar: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n12" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ef4444"/><stop offset="1" stop-color="#f97316"/></linearGradient></defs><rect x="3" y="4" width="18" height="18" rx="2" fill="none" stroke="url(#n12)" stroke-width="2.5"/><path d="M3 10 L21 10" stroke="#ef4444" stroke-width="2.5"/><path d="M8 2 L8 6 M16 2 L16 6" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+  worldclock: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n13" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#06b6d4"/><stop offset="1" stop-color="#3b82f6"/></linearGradient></defs><circle cx="12" cy="12" r="10" fill="none" stroke="url(#n13)" stroke-width="2.5"/><path d="M2 12 L22 12 M12 2 Q8 12 12 22 Q16 12 12 2" stroke="#06b6d4" stroke-width="1.5" fill="none"/><path d="M12 6 L12 12 L16 14" stroke="#06b6d4" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`,
+  contacts: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n14" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/></linearGradient></defs><circle cx="12" cy="8" r="4" fill="url(#n14)"/><path d="M4 22 Q4 14 12 14 Q20 14 20 22" fill="url(#n14)"/></svg>`,
+  voice: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n15" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ec4899"/><stop offset="1" stop-color="#f43f5e"/></linearGradient></defs><rect x="9" y="3" width="6" height="12" rx="3" fill="url(#n15)"/><path d="M5 11 Q5 18 12 18 Q19 18 19 11" stroke="#ec4899" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M12 18 L12 22 M8 22 L16 22" stroke="#ec4899" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+  weatherdetail: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n16" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#0284c7"/></linearGradient></defs><path d="M18 10 Q18 6 14 6 Q11 6 10 8 Q7 8 7 11 Q4 11 4 14 Q4 17 7 17 L18 17 Q21 17 21 14 Q21 10 18 10 Z" fill="url(#n16)"/></svg>`,
+  dice: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n17" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f59e0b"/><stop offset="1" stop-color="#fbbf24"/></linearGradient></defs><rect x="3" y="3" width="18" height="18" rx="3" fill="none" stroke="url(#n17)" stroke-width="2.5"/><circle cx="8" cy="8" r="1.5" fill="#f59e0b"/><circle cx="16" cy="8" r="1.5" fill="#f59e0b"/><circle cx="8" cy="16" r="1.5" fill="#f59e0b"/><circle cx="16" cy="16" r="1.5" fill="#f59e0b"/><circle cx="12" cy="12" r="1.5" fill="#f59e0b"/></svg>`,
+  decision: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n18" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs><path d="M12 2 L2 12 L12 22 L22 12 Z" fill="none" stroke="url(#n18)" stroke-width="2.5"/><text x="12" y="16" text-anchor="middle" font-size="10" font-weight="700" fill="#8b5cf6" font-family="Arial">?</text></svg>`,
+  currency: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n19" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#10b981"/><stop offset="1" stop-color="#059669"/></linearGradient></defs><circle cx="12" cy="12" r="10" fill="none" stroke="url(#n19)" stroke-width="2.5"/><text x="12" y="16" text-anchor="middle" font-size="12" font-weight="700" fill="#10b981" font-family="Arial">$</text></svg>`,
+  calc: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n20" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#06b6d4"/><stop offset="1" stop-color="#0891b2"/></linearGradient></defs><rect x="4" y="2" width="16" height="20" rx="2" fill="none" stroke="url(#n20)" stroke-width="2.5"/><rect x="6" y="4" width="12" height="4" rx="1" fill="#06b6d4" opacity=".4"/><circle cx="8" cy="12" r="1.3" fill="#06b6d4"/><circle cx="12" cy="12" r="1.3" fill="#06b6d4"/><circle cx="16" cy="12" r="1.3" fill="#06b6d4"/><circle cx="8" cy="16" r="1.3" fill="#06b6d4"/><circle cx="12" cy="16" r="1.3" fill="#06b6d4"/><circle cx="16" cy="16" r="1.3" fill="#06b6d4"/></svg>`,
+  chrono: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n21" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b82f6"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs><circle cx="12" cy="13" r="9" fill="none" stroke="url(#n21)" stroke-width="2.5"/><path d="M12 7 L12 13 L16 15" stroke="#3b82f6" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M9 2 L15 2" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+  notes: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n22" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbbf24"/><stop offset="1" stop-color="#f59e0b"/></linearGradient></defs><rect x="4" y="3" width="16" height="18" rx="2" fill="none" stroke="url(#n22)" stroke-width="2.5"/><path d="M8 8 L16 8 M8 12 L16 12 M8 16 L13 16" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/></svg>`,
+  todo: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n23" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22c55e"/><stop offset="1" stop-color="#16a34a"/></linearGradient></defs><rect x="3" y="4" width="5" height="5" rx="1" fill="none" stroke="url(#n23)" stroke-width="2.5"/><path d="M4.5 6.5 L5.5 7.5 L7 5.5" stroke="#22c55e" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M11 6.5 L20 6.5" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+  counter: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n24" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0ea5e9"/><stop offset="1" stop-color="#0284c7"/></linearGradient></defs><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="url(#n24)" stroke-width="2.5"/><text x="12" y="16" text-anchor="middle" font-size="11" font-weight="700" fill="#0ea5e9" font-family="Arial">42</text></svg>`,
+  quote: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n25" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#a855f7"/></linearGradient></defs><path d="M6 17 Q3 17 3 13 Q3 9 7 8 L8 10 Q6 11 6 13 L8 13 L8 17 Z" fill="url(#n25)"/><path d="M15 17 Q12 17 12 13 Q12 9 16 8 L17 10 Q15 11 15 13 L17 13 L17 17 Z" fill="url(#n25)"/></svg>`,
+  qr: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n26" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#64748b"/><stop offset="1" stop-color="#334155"/></linearGradient></defs><rect x="3" y="3" width="7" height="7" rx="1" fill="none" stroke="url(#n26)" stroke-width="2.5"/><rect x="14" y="3" width="7" height="7" rx="1" fill="none" stroke="url(#n26)" stroke-width="2.5"/><rect x="3" y="14" width="7" height="7" rx="1" fill="none" stroke="url(#n26)" stroke-width="2.5"/><rect x="14" y="14" width="3" height="3" fill="#64748b"/></svg>`,
+  crypto: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n27" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7931a"/><stop offset="1" stop-color="#fbbf24"/></linearGradient></defs><circle cx="12" cy="12" r="10" fill="none" stroke="url(#n27)" stroke-width="2.5"/><text x="12" y="16" text-anchor="middle" font-size="12" font-weight="700" fill="#f7931a" font-family="Arial">₿</text></svg>`,
+  battery: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n28" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4ade80"/><stop offset="1" stop-color="#22c55e"/></linearGradient></defs><rect x="2" y="7" width="18" height="10" rx="2" fill="none" stroke="url(#n28)" stroke-width="2.5"/><rect x="20" y="10" width="2" height="4" rx="1" fill="#4ade80"/><rect x="4" y="9" width="10" height="6" rx="1" fill="url(#n28)" opacity=".7"/></svg>`,
+  password: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n29" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f43f5e"/><stop offset="1" stop-color="#e11d48"/></linearGradient></defs><rect x="5" y="11" width="14" height="10" rx="2" fill="none" stroke="url(#n29)" stroke-width="2.5"/><path d="M8 11 L8 7 A4 4 0 0 1 16 7 L16 11" stroke="#f43f5e" stroke-width="2.5" fill="none"/><circle cx="12" cy="16" r="2" fill="#f43f5e"/></svg>`,
+  converter: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n30" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14b8a6"/><stop offset="1" stop-color="#0d9488"/></linearGradient></defs><path d="M7 4 L3 8 L7 12" stroke="url(#n30)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 8 L21 8" stroke="#14b8a6" stroke-width="2.5" stroke-linecap="round"/><path d="M17 12 L21 16 L17 20" stroke="url(#n30)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 16 L3 16" stroke="#14b8a6" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+  color: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n31" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ec4899"/><stop offset=".5" stop-color="#8b5cf6"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs><circle cx="12" cy="12" r="9" fill="none" stroke="url(#n31)" stroke-width="2.5"/><circle cx="9" cy="9" r="2.5" fill="#ec4899"/><circle cx="15" cy="9" r="2.5" fill="#8b5cf6"/><circle cx="12" cy="15" r="2.5" fill="#06b6d4"/></svg>`,
+  settings: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n32" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#667eea"/><stop offset="1" stop-color="#764ba2"/></linearGradient></defs><path d="M12 15.5A3.5 3.5 0 0 1 8.5 12 3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5m7.43-2.53c.04-.32.07-.64.07-.97 0-.33-.03-.66-.07-1l2.11-1.63c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.06-.73-1.69-.98l-.37-2.65A.506.506 0 0 0 14 2h-4c-.25 0-.46.18-.5.42l-.37 2.65c-.63.25-1.17.59-1.69.98l-2.49-1c-.22-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64L4.57 11c-.04.34-.07.67-.07 1 0 .33.03.65.07.97l-2.11 1.66c-.19.15-.25.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1.01c.52.4 1.06.74 1.69.99l.37 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.37-2.65c.63-.26 1.17-.59 1.69-.99l2.49 1.01c.22.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.66z" fill="url(#n32)"/></svg>`,
+  flashlight: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n33" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbbf24"/><stop offset="1" stop-color="#f59e0b"/></linearGradient></defs><path d="M7 2v11h3v9l7-12h-4l4-8z" fill="url(#n33)"/></svg>`,
+  noise: `<svg viewBox="0 0 24 24"><defs><linearGradient id="n34" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#7c3aed"/></linearGradient></defs><path d="M3 9v6h4l5 5V4L7 9H3z" fill="url(#n34)"/><path d="M16 8 Q20 12 16 16 M18 6 Q24 12 18 18" stroke="#a78bfa" stroke-width="2" fill="none" stroke-linecap="round"/></svg>`
+};
+
+const WIDGETS = [
+  {id:'network',label:'Rete'},{id:'performance',label:'Sistema'},
+  {id:'location',label:'GPS'},{id:'compass',label:'Bussola'},
+  {id:'level',label:'Livella'},{id:'timer',label:'Timer'},
+  {id:'pomodoro',label:'Pomodoro'},{id:'countdown',label:'Conto'},
+  {id:'moon',label:'Luna'},{id:'mood',label:'Umore'},
+  {id:'ruler',label:'Righello'},{id:'calendar',label:'Calend.'},
+  {id:'worldclock',label:'World'},{id:'contacts',label:'Contatti'},
+  {id:'voice',label:'Voce'},{id:'weatherdetail',label:'Meteo+'},
+  {id:'dice',label:'Dadi'},{id:'decision',label:'Decidi'},
+  {id:'currency',label:'Valuta'},{id:'calc',label:'Calcola'},
+  {id:'chrono',label:'Crono'},{id:'notes',label:'Note'},
+  {id:'todo',label:'Todo'},{id:'counter',label:'Conta'},
+  {id:'quote',label:'Citaz.'},{id:'qr',label:'QR'},
+  {id:'crypto',label:'Crypto'},{id:'battery',label:'Batt.'},
+  {id:'password',label:'Pwd'},{id:'converter',label:'Conv.'},
+  {id:'color',label:'Colori'},{id:'flashlight',label:'Torcia'},
+  {id:'noise',label:'Suoni'},{id:'settings',label:'⚙️'}
+];
+
+const FONTS = [
+  {name:'Inter',family:"'Inter',sans-serif",label:'Inter'},
+  {name:'SF Pro',family:"-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif",label:'SF Pro'},
+  {name:'Orbitron',family:"'Orbitron',sans-serif",label:'Orbitron'},
+  {name:'Mono',family:"'Space Mono',monospace",label:'Mono'},
+  {name:'Bebas',family:"'Bebas Neue',sans-serif",label:'Bebas'},
+  {name:'Playfair',family:"'Playfair Display',serif",label:'Playfair'}
+];
+
+const CLOCK_STYLES = [
+  {id:'digital',label:'Digitale'},{id:'minimal',label:'Minimale'},
+  {id:'bold',label:'Bold'},{id:'orbitron',label:'Futuristico'},
+  {id:'neon',label:'Neon'},{id:'retro',label:'Retro'},
+  {id:'serif',label:'Serif'},{id:'mono',label:'Mono'},
+  {id:'analog',label:'Analogico'},{id:'flip',label:'Flip'}
+];
+
+const BG_PRESETS = {
+  dynamic:null,
+  ocean:'linear-gradient(135deg,#2E3192,#1BFFFF)',
+  sunset:'linear-gradient(135deg,#ff512f,#f09819)',
+  forest:'linear-gradient(135deg,#134E5E,#71B280)',
+  night:'linear-gradient(135deg,#0f0c29,#302b63,#24243e)',
+  rose:'linear-gradient(135deg,#ee9ca7,#ffdde1)',
+  aurora:'linear-gradient(135deg,#00c9ff,#92fe9d)',
+  lava:'linear-gradient(135deg,#f5af19,#f12711)',
+  galaxy:'linear-gradient(135deg,#1e3c72,#2a5298,#7e3ff2)'
+};
+
+const WMO_CODES = {0:{d:'Sereno',i:'☀️'},1:{d:'Sereno',i:'🌤️'},2:{d:'Nuvole',i:'⛅'},3:{d:'Coperto',i:'☁️'},45:{d:'Nebbia',i:'🌫️'},48:{d:'Brina',i:'🌫️'},51:{d:'Pioggerella',i:'🌦️'},53:{d:'Pioggerella',i:'🌦️'},55:{d:'Pioggia',i:'🌧️'},61:{d:'Pioggia',i:'🌦️'},63:{d:'Pioggia',i:'🌧️'},65:{d:'Pioggia',i:'🌧️'},71:{d:'Neve',i:'🌨️'},73:{d:'Neve',i:'🌨️'},75:{d:'Neve',i:'❄️'},80:{d:'Rovesci',i:'🌦️'},81:{d:'Rovesci',i:'🌧️'},82:{d:'Temporale',i:'⛈️'},95:{d:'Temporale',i:'⛈️'},96:{d:'Grandine',i:'⛈️'},99:{d:'Temporale',i:'⛈️'}};
+
+const QUOTES = [
+  {t:"L'unico modo per fare un ottimo lavoro è amare quello che fai.",a:"Steve Jobs"},
+  {t:"La vita è quello che accade mentre sei impegnato a fare altri progetti.",a:"John Lennon"},
+  {t:"Sii il cambiamento che vuoi vedere nel mondo.",a:"Gandhi"},
+  {t:"Il futuro appartiene a coloro che credono nella bellezza dei propri sogni.",a:"Eleanor Roosevelt"},
+  {t:"La semplicità è la suprema sofisticazione.",a:"Leonardo da Vinci"},
+  {t:"L'immaginazione è più importante della conoscenza.",a:"Albert Einstein"},
+  {t:"Ogni giorno è una nuova opportunità per cambiare la tua vita.",a:"Anonimo"},
+  {t:"Il successo non è definitivo, il fallimento non è fatale.",a:"Winston Churchill"},
+  {t:"Non contare i giorni, fai che i giorni contino.",a:"Muhammad Ali"},
+  {t:"La creatività è l'intelligenza che si diverte.",a:"Albert Einstein"}
+];
+
+const WORLD_CITIES = [
+  {name:'Roma',tz:'Europe/Rome'},{name:'New York',tz:'America/New_York'},
+  {name:'Tokyo',tz:'Asia/Tokyo'},{name:'Londra',tz:'Europe/London'},
+  {name:'Sydney',tz:'Australia/Sydney'},{name:'Dubai',tz:'Asia/Dubai'},
+  {name:'Parigi',tz:'Europe/Paris'},{name:'Los Angeles',tz:'America/Los_Angeles'}
+];
+
+function compressImage(dataUrl, width, height, type, quality){
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+      resolve(canvas.toDataURL(type, quality));
+    };
+    img.onerror = reject;
+    img.src = dataUrl;
+  });
+}
+
+async function compressAllIcons(){
+  const keys = Object.keys(prefs.customIcons || {});
+  if(keys.length === 0) return false;
+  for(const key of keys){
+    const dataUrl = prefs.customIcons[key];
+    if(!dataUrl || !dataUrl.startsWith('data:')) continue;
+    try{prefs.customIcons[key] = await compressImage(dataUrl, 48, 48, 'image/jpeg', 0.7)}
+    catch(err){delete prefs.customIcons[key]}
+  }
+  return true;
+}
+
+function getStorageUsed(){
+  try{return new Blob([JSON.stringify(localStorage)]).size}catch(e){return 0}
+}
+
+function loadPrefs(){
+  try{
+    const saved = JSON.parse(localStorage.getItem('sandroPrefsPro') || '{}');
+    return {
+      font: saved.font || FONTS[0].family,
+      scale: saved.scale || 1,
+      bg: saved.bg || 'dynamic',
+      bgImage: saved.bgImage || null,
+      clockStyle: saved.clockStyle || 'digital',
+      notes: saved.notes || [],
+      todos: saved.todos || [],
+      counter: saved.counter || 0,
+      moods: saved.moods || [],
+      countdowns: saved.countdowns || [],
+      contacts: saved.contacts || [],
+      voiceNotes: saved.voiceNotes || [],
+      customIcons: saved.customIcons || {}
+    };
+  }catch(e){
+    return {font:FONTS[0].family,scale:1,bg:'dynamic',bgImage:null,clockStyle:'digital',notes:[],todos:[],counter:0,moods:[],countdowns:[],contacts:[],voiceNotes:[],customIcons:{}};
+  }
+}
+
+function savePrefs(){
+  try{
+    localStorage.setItem('sandroPrefsPro', JSON.stringify(prefs));
+    return true;
+  }catch(e){
+    if(e.name === 'QuotaExceededError'){
+      showToast('⚠️ Memoria piena, compressione in corso...');
+      compressAllIcons().then(ok => {
+        if(ok){
+          try{localStorage.setItem('sandroPrefsPro', JSON.stringify(prefs));showToast('✅ Spazio liberato, salvato!');renderWidgets()}
+          catch(e2){showToast('❌ Cancella qualche icona o sfondo')}
+        } else {showToast('❌ Cancella qualche icona o sfondo')}
+      });
+      return false;
+    }
+    return false;
+  }
+}
+
+let prefs = loadPrefs();
+
+function escapeHtml(s){return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function showToast(msg){
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(), 2500);
+}
+
+const modalOverlay = document.getElementById('modalOverlay');
+const modalTitle = document.getElementById('modalTitle');
+const modalBody = document.getElementById('modalBody');
+let modalCleanup = null;
+
+function openModal(title, content){
+  if(modalCleanup){modalCleanup();modalCleanup=null}
+  modalTitle.textContent = title;
+  modalBody.innerHTML = content;
+  modalOverlay.classList.remove('hidden');
+}
+function closeModal(){
+  modalOverlay.classList.add('hidden');
+  if(modalCleanup){modalCleanup();modalCleanup=null}
+}
+document.getElementById('modalClose').addEventListener('click', closeModal);
+modalOverlay.addEventListener('click', e=>{if(e.target === modalOverlay) closeModal()});
+
+function renderWidgets(){
+  const grid = document.getElementById('widgetsGrid');
+  grid.innerHTML = WIDGETS.map(w => {
+    const hasCustom = !!prefs.customIcons[w.id];
+    const iconContent = hasCustom ? `<img src="${prefs.customIcons[w.id]}" alt="${w.label}">` : DEFAULT_ICONS[w.id];
+    return `<button class="widget-btn${hasCustom ? ' has-custom' : ''}" data-widget="${w.id}"><div class="w-icon">${iconContent}</div><div class="w-label">${w.label}</div></button>`;
+  }).join('');
+  grid.querySelectorAll('.widget-btn').forEach(btn=>{btn.addEventListener('click', function(){openWidget(this.dataset.widget)})});
+}
+
+function openWidget(name){
+  const widgets = {
+    network:openNetwork,performance:openPerformance,location:openLocation,
+    compass:openCompass,level:openLevel,timer:openTimer,
+    pomodoro:openPomodoro,countdown:openCountdown,moon:openMoon,
+    mood:openMood,ruler:openRuler,calendar:openCalendar,
+    worldclock:openWorldClock,contacts:openContacts,voice:openVoice,
+    weatherdetail:openWeatherDetail,dice:openDice,decision:openDecision,
+    currency:openCurrency,calc:openCalc,chrono:openChrono,
+    notes:openNotes,todo:openTodo,counter:openCounter,
+    quote:openQuote,qr:openQR,crypto:openCrypto,
+    battery:openBattery,password:openPassword,converter:openConverter,
+    color:openColor,flashlight:openFlashlight,noise:openNoise,
+    settings:openSettings
+  };
+  if(widgets[name]) widgets[name]();
+}
+
+function openNetwork(){
+  function render(){
+    const online = navigator.onLine;
+    const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    let info = '';
+    if(conn){info = `<div class="info-box"><div><strong>Tipo:</strong> ${conn.effectiveType || 'N/D'}</div><div><strong>Downlink:</strong> ${conn.downlink || 'N/D'} Mbps</div><div><strong>RTT:</strong> ${conn.rtt || 'N/D'} ms</div></div>`}
+    modalBody.innerHTML = `<div style="text-align:center;padding:20px 0"><div style="font-size:80px">${online ? '📶' : '📵'}</div><div style="font-size:24px;font-weight:600;margin-top:10px">${online ? 'ONLINE' : 'OFFLINE'}</div>${info}</div>`;
+  }
+  openModal('📶 Stato Rete', '');
+  render();
+  const handler = render;
+  window.addEventListener('online', handler);
+  window.addEventListener('offline', handler);
+  modalCleanup = ()=>{window.removeEventListener('online', handler);window.removeEventListener('offline', handler)};
+}
+
+function openPerformance(){
+  const mem = performance.memory || {};
+  openModal('🚀 Sistema', `<div class="info-box"><div><strong>CPU Cores:</strong> ${navigator.hardwareConcurrency || 'N/D'}</div><div><strong>Lingua:</strong> ${navigator.language}</div><div><strong>Piattaforma:</strong> ${navigator.platform}</div><div><strong>Online:</strong> ${navigator.onLine ? 'Sì' : 'No'}</div><div><strong>Touch:</strong> ${'ontouchstart' in window ? 'Sì' : 'No'}</div><div><strong>Risoluzione:</strong> ${screen.width}x${screen.height}</div><div><strong>Finestra:</strong> ${window.innerWidth}x${window.innerHeight}</div>${mem.jsHeapSizeLimit ? `<div><strong>Heap JS:</strong> ${Math.round(mem.usedJSHeapSize/1048576)}MB / ${Math.round(mem.jsHeapSizeLimit/1048576)}MB</div>` : ''}</div>`);
+}
+
+function openLocation(){
+  openModal('🌍 Localizzazione', '<div style="text-align:center;padding:20px"><div class="loading"></div></div>');
+  if(!navigator.geolocation){modalBody.innerHTML = '<div style="text-align:center;color:#ef4444">Non disponibile</div>';return}
+  navigator.geolocation.getCurrentPosition(async (pos)=>{
+    const {latitude, longitude, altitude, accuracy, speed} = pos.coords;
+    let address = 'Non disponibile';
+    try{
+      const geoRes = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&accept-language=it`);
+      const geoData = await geoRes.json();
+      address = geoData.display_name || 'Non disponibile';
+    }catch(e){}
+    modalBody.innerHTML = `<div class="info-box"><div><strong>Lat:</strong> ${latitude.toFixed(6)}°</div><div><strong>Lon:</strong> ${longitude.toFixed(6)}°</div><div><strong>Alt:</strong> ${altitude !== null ? altitude.toFixed(1) + ' m' : 'N/D'}</div><div><strong>Precisione:</strong> ${accuracy.toFixed(1)} m</div><div><strong>Velocità:</strong> ${speed !== null ? (speed * 3.6).toFixed(1) + ' km/h' : 'N/D'}</div></div><div class="info-box"><strong>📍 Indirizzo:</strong><br>${escapeHtml(address)}</div><button class="big-btn primary" style="width:100%;margin-top:10px" onclick="window.open('https://www.google.com/maps?q=${latitude},${longitude}','_blank')">🗺️ Apri in Maps</button>`;
+  }, (err)=>{modalBody.innerHTML = `<div style="text-align:center;color:#ef4444">Errore: ${err.message}</div>`});
+}
+
+function openCompass(){
+  openModal('🧭 Bussola', `<div style="text-align:center;padding:10px 0"><div class="compass" id="compass"><div class="compass-direction compass-n">N</div><div class="compass-direction compass-s">S</div><div class="compass-direction compass-e">E</div><div class="compass-direction compass-w">O</div><div class="compass-center"></div></div><div style="font-size:32px;font-weight:300;margin-top:16px" id="compassDeg">--°</div><div style="font-size:14px;color:rgba(255,255,255,.7);margin-top:4px" id="compassDir">Attivazione...</div></div>`);
+  const compass = document.getElementById('compass');
+  const degEl = document.getElementById('compassDeg');
+  const dirEl = document.getElementById('compassDir');
+  function getDirection(deg){const dirs = ['N','NE','E','SE','S','SO','O','NO'];return dirs[Math.round(deg/45)%8]}
+  function handle(e){
+    let h;
+    if(e.webkitCompassHeading !== undefined) h = e.webkitCompassHeading;
+    else if(e.alpha !== null) h = 360 - e.alpha;
+    else {dirEl.textContent = 'Non disponibile';return}
+    compass.style.transform = `rotate(${-h}deg)`;
+    degEl.textContent = `${Math.round(h)}°`;
+    dirEl.textContent = getDirection(h);
+  }
+  if(typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function'){
+    DeviceOrientationEvent.requestPermission().then(r=>{if(r === 'granted') window.addEventListener('deviceorientation', handle);else dirEl.textContent = 'Permesso negato'});
+  } else if('DeviceOrientationEvent' in window){
+    window.addEventListener('deviceorientation', handle);
+    setTimeout(()=>{if(degEl.textContent === '--°') dirEl.textContent = 'Muovi il dispositivo'}, 1500);
+  } else dirEl.textContent = 'Non supportato';
+  modalCleanup = ()=>window.removeEventListener('deviceorientation', handle);
+}
+
+function openLevel(){
+  openModal('📐 Livella', `<div style="text-align:center;padding:10px 0"><div class="level-bubble"><div class="level-ball" id="levelBall"></div></div><div style="display:flex;gap:20px;justify-content:center;margin-top:14px;font-size:16px"><div>β: <span id="levelBeta">0°</span></div><div>γ: <span id="levelGamma">0°</span></div></div></div>`);
+  const ball = document.getElementById('levelBall');
+  const betaEl = document.getElementById('levelBeta');
+  const gammaEl = document.getElementById('levelGamma');
+  function handle(e){
+    const beta = e.beta || 0;const gamma = e.gamma || 0;
+    const cB = Math.max(-45, Math.min(45, beta));const cG = Math.max(-45, Math.min(45, gamma));
+    const offX = (cG/45)*70;const offY = (cB/45)*70;
+    ball.style.transform = `translate(calc(-50% + ${offX}px), calc(-50% + ${offY}px))`;
+    betaEl.textContent = `${beta.toFixed(1)}°`;gammaEl.textContent = `${gamma.toFixed(1)}°`;
+    if(Math.abs(beta) < 2 && Math.abs(gamma) < 2){ball.style.background = 'radial-gradient(circle,#4ade80 0%,#16a34a 100%)';ball.style.boxShadow = '0 0 30px rgba(74,222,128,.9)'}
+    else{ball.style.background = 'radial-gradient(circle,#fbbf24 0%,#f59e0b 100%)';ball.style.boxShadow = '0 0 20px rgba(251,191,36,.6)'}
+  }
+  if(typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function'){
+    DeviceOrientationEvent.requestPermission().then(r=>{if(r === 'granted') window.addEventListener('deviceorientation', handle)});
+  } else window.addEventListener('deviceorientation', handle);
+  modalCleanup = ()=>window.removeEventListener('deviceorientation', handle);
+}
+
+function openTimer(){
+  openModal('⏲️ Timer', `<div id="timerSetup"><div style="display:flex;justify-content:center;gap:8px;margin:12px 0"><input type="number" id="tH" min="0" max="23" value="0" placeholder="H" style="width:60px;padding:10px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:8px;color:white;font-size:18px;text-align:center"><input type="number" id="tM" min="0" max="59" value="5" placeholder="M" style="width:60px;padding:10px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:8px;color:white;font-size:18px;text-align:center"><input type="number" id="tS" min="0" max="59" value="0" placeholder="S" style="width:60px;padding:10px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:8px;color:white;font-size:18px;text-align:center"></div><button class="big-btn primary" style="width:100%" id="timerStart">Avvia</button></div><div id="timerRunning" style="display:none"><div class="big-display" id="timerDisplay">00:00:00</div><div class="btn-row"><button class="big-btn secondary" id="timerReset">Reset</button><button class="big-btn primary" id="timerPause">Pausa</button></div></div>`);
+  let remaining = 0, timerRunning = false, timerEnd = 0, interval;
+  const setupEl = document.getElementById('timerSetup');
+  const runEl = document.getElementById('timerRunning');
+  const display = document.getElementById('timerDisplay');
+  document.getElementById('timerStart').addEventListener('click', ()=>{
+    const h = +document.getElementById('tH').value || 0;
+    const m = +document.getElementById('tM').value || 0;
+    const s = +document.getElementById('tS').value || 0;
+    remaining = (h*3600 + m*60 + s)*1000;
+    if(remaining <= 0) return;
+    timerEnd = Date.now() + remaining;timerRunning = true;
+    setupEl.style.display = 'none';runEl.style.display = 'block';
+    runTimer();interval = setInterval(runTimer, 100);
+  });
+  function runTimer(){
+    const left = timerEnd - Date.now();
+    if(left <= 0){display.textContent = '00:00:00';clearInterval(interval);timerRunning = false;showToast('⏰ Tempo scaduto!');return}
+    const h = Math.floor(left/3600000);const m = Math.floor((left%3600000)/60000);const s = Math.floor((left%60000)/1000);
+    display.textContent = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  }
+  document.getElementById('timerPause').addEventListener('click', (e)=>{
+    if(timerRunning){remaining = timerEnd - Date.now();clearInterval(interval);timerRunning = false;e.target.textContent = 'Riprendi'}
+    else{timerEnd = Date.now() + remaining;timerRunning = true;interval = setInterval(runTimer, 100);e.target.textContent = 'Pausa'}
+  });
+  document.getElementById('timerReset').addEventListener('click', ()=>{clearInterval(interval);timerRunning = false;setupEl.style.display = 'block';runEl.style.display = 'none'});
+  modalCleanup = ()=>clearInterval(interval);
+}
+
+function openPomodoro(){
+  openModal('🍅 Pomodoro', `<div style="text-align:center"><div style="font-size:13px;color:rgba(255,255,255,.7);margin-bottom:8px" id="pomoStatus">Pronto</div><div class="big-display" id="pomoDisplay">25:00</div><div class="btn-row"><button class="big-btn primary" id="pomoWork" style="background:var(--accent)">Lavoro</button><button class="big-btn secondary" id="pomoShort">Pausa 5'</button><button class="big-btn secondary" id="pomoLong">Pausa 15'</button></div><div class="btn-row"><button class="big-btn secondary" id="pomoReset">Reset</button><button class="big-btn primary" id="pomoStart">Start</button></div><div style="margin-top:12px;font-size:13px;color:rgba(255,255,255,.7)">Cicli: <span id="pomoCount">0</span></div></div>`);
+  let mode = 'work', duration = 25*60*1000, endTime = 0, running = false, cycles = 0, interval;
+  const display = document.getElementById('pomoDisplay');
+  const status = document.getElementById('pomoStatus');
+  const countEl = document.getElementById('pomoCount');
+  function updateDisplay(ms){const m = Math.floor(ms/60000);const s = Math.floor((ms%60000)/1000);display.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`}
+  updateDisplay(duration);
+  function tick(){
+    const left = endTime - Date.now();
+    if(left <= 0){clearInterval(interval);running = false;if(mode === 'work'){cycles++;countEl.textContent = cycles}showToast(mode === 'work' ? '🍅 Completato!' : '⏸️ Pausa finita');document.getElementById('pomoStart').textContent = 'Start';return}
+    updateDisplay(left);
+  }
+  document.getElementById('pomoStart').addEventListener('click', (e)=>{
+    if(!running){running = true;endTime = Date.now() + duration;interval = setInterval(tick, 100);e.target.textContent = 'Pausa';status.textContent = mode === 'work' ? '🍅 Concentrazione...' : '⏸️ Pausa'}
+    else{duration = endTime - Date.now();clearInterval(interval);running = false;e.target.textContent = 'Riprendi'}
+  });
+  document.getElementById('pomoReset').addEventListener('click', ()=>{clearInterval(interval);running = false;duration = mode === 'work' ? 25*60*1000 : mode === 'short' ? 5*60*1000 : 15*60*1000;updateDisplay(duration);document.getElementById('pomoStart').textContent = 'Start';status.textContent = 'Pronto'});
+  ['pomoWork','pomoShort','pomoLong'].forEach(id=>{
+    document.getElementById(id).addEventListener('click', (e)=>{
+      document.querySelectorAll('#pomoWork,#pomoShort,#pomoLong').forEach(b=>{b.style.background = 'rgba(255,255,255,.2)'});
+      e.target.style.background = 'var(--accent)';
+      mode = id.replace('pomo','').toLowerCase();
+      duration = mode === 'work' ? 25*60*1000 : mode === 'short' ? 5*60*1000 : 15*60*1000;
+      clearInterval(interval);running = false;updateDisplay(duration);
+      document.getElementById('pomoStart').textContent = 'Start';status.textContent = 'Pronto';
+    });
+  });
+  modalCleanup = ()=>clearInterval(interval);
+}
+
+function openCountdown(){renderCountdowns()}
+function renderCountdowns(){
+  const list = prefs.countdowns || [];
+  const now = Date.now();
+  const items = list.map((c,i)=>{
+    const target = new Date(c.date).getTime();const diff = target - now;
+    let timeText;
+    if(diff <= 0) timeText = '🎉 Oggi!';
+    else{const d = Math.floor(diff/86400000);const h = Math.floor((diff%86400000)/3600000);timeText = d > 30 ? `${d} giorni` : `${d}g ${h}h`}
+    return `<div class="list-item"><div class="content"><div><strong>${escapeHtml(c.title)}</strong></div><div class="time">${new Date(c.date).toLocaleDateString('it-IT')}</div></div><div style="text-align:right"><div style="font-size:16px;font-weight:700">${timeText}</div></div><button class="del-btn" data-idx="${i}">✕</button></div>`;
+  }).join('');
+  openModal('🎂 Conto alla Rovescia', `<div>${items || '<div style="text-align:center;color:rgba(255,255,255,.6);padding:20px">Nessun countdown</div>'}</div><div class="input-area" style="flex-direction:column"><input type="text" id="cdTitle" placeholder="Titolo (es. Compleanno)"><input type="date" id="cdDate"><button id="cdSave">Aggiungi</button></div>`);
+  document.querySelectorAll('.del-btn').forEach(b=>{b.addEventListener('click', function(){prefs.countdowns.splice(+this.dataset.idx, 1);savePrefs();renderCountdowns()})});
+  document.getElementById('cdSave').addEventListener('click', ()=>{
+    const title = document.getElementById('cdTitle').value.trim();const date = document.getElementById('cdDate').value;
+    if(!title || !date) return;
+    prefs.countdowns.push({title, date});savePrefs();renderCountdowns();
+  });
+}
+
+function openMoon(){
+  const now = new Date();
+  const nowutc = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) / 1000;
+  const phase = ((nowutc - 33862.5) / 86400) % 29.530588853;
+  const phaseNorm = phase < 0 ? phase + 29.53 : phase;
+  let phaseName, phaseEmoji;
+  if(phaseNorm < 1.84566){phaseName='Luna Nuova';phaseEmoji='🌑'}
+  else if(phaseNorm < 5.53699){phaseName='Luna Crescente';phaseEmoji='🌒'}
+  else if(phaseNorm < 9.22831){phaseName='Primo Quarto';phaseEmoji='🌓'}
+  else if(phaseNorm < 12.91963){phaseName='Gibbosa Crescente';phaseEmoji='🌔'}
+  else if(phaseNorm < 16.61096){phaseName='Luna Piena';phaseEmoji='🌕'}
+  else if(phaseNorm < 20.30228){phaseName='Gibbosa Calante';phaseEmoji='🌖'}
+  else if(phaseNorm < 23.99361){phaseName='Ultimo Quarto';phaseEmoji='🌗'}
+  else if(phaseNorm < 27.68493){phaseName='Luna Calante';phaseEmoji='🌘'}
+  else {phaseName='Luna Nuova';phaseEmoji='🌑'}
+  const illumination = Math.round((1 - Math.cos((phaseNorm/29.530588853)*2*Math.PI))/2*100);
+  openModal('🌙 Fase Lunare', `<div style="text-align:center;padding:10px 0"><div style="font-size:100px">${phaseEmoji}</div><div style="font-size:22px;font-weight:600;margin-top:8px">${phaseName}</div><div style="font-size:14px;color:rgba(255,255,255,.7);margin-top:4px">Illuminazione: ${illumination}%</div><div class="info-box" style="text-align:left;margin-top:14px"><div><strong>Età lunare:</strong> ${phaseNorm.toFixed(1)} giorni</div><div><strong>Ciclo sinodico:</strong> 29.53 giorni</div><div><strong>Data:</strong> ${now.toLocaleDateString('it-IT')}</div></div></div>`);
+}
+
+function openMood(){
+  const emojis = ['😢','😕','😐','🙂','😄'];
+  const labels = ['Triste','Giù','Neutro','Bene','Felice'];
+  const moods = prefs.moods || [];
+  const list = moods.slice(0,10).map(m=>`<div class="list-item"><div class="content">${emojis[m.value]} ${labels[m.value]}<div class="time">${new Date(m.time).toLocaleString('it-IT')}</div></div></div>`).join('');
+  openModal('😊 Diario Umore', `<div style="text-align:center;margin-bottom:8px;font-size:14px">Come ti senti?</div><div class="mood-grid">${emojis.map((e,i)=>`<button class="mood-btn" data-val="${i}">${e}</button>`).join('')}</div><div style="font-size:14px;font-weight:600;margin:12px 0 6px">Storico</div>${list || '<div style="text-align:center;color:rgba(255,255,255,.6);padding:12px">Nessun registro</div>'}`);
+  document.querySelectorAll('.mood-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      prefs.moods.unshift({value:+btn.dataset.val, time:Date.now()});
+      if(prefs.moods.length > 50) prefs.moods = prefs.moods.slice(0,50);
+      savePrefs();showToast('✅ Registrato');setTimeout(openMood, 400);
+    });
+  });
+}
+
+function openRuler(){
+  openModal('📏 Righello', `<div style="padding:10px 0"><div style="background:rgba(255,255,255,.1);border-radius:10px;padding:12px"><div style="display:flex;justify-content:space-between;margin-bottom:4px;font-size:10px;color:rgba(255,255,255,.7)"><span>0</span><span>5cm</span><span>10cm</span><span>15cm</span></div><div style="height:40px;position:relative;border-left:2px solid white;border-right:2px solid white">${Array.from({length:31},(_,i)=>{const h = i%5===0?28:14;return `<div style="position:absolute;left:${i*(100/30)}%;bottom:0;width:1px;height:${h}px;background:white"></div>`}).join('')}</div><div style="text-align:center;margin-top:6px;font-size:11px;color:rgba(255,255,255,.7)">15 cm</div></div></div>`);
+}
+
+function openCalendar(){
+  const now = new Date();const year = now.getFullYear();const month = now.getMonth();const today = now.getDate();
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+  const daysInPrevMonth = new Date(year, month, 0).getDate();
+  const startDay = firstDay === 0 ? 6 : firstDay - 1;
+  const monthName = now.toLocaleDateString('it-IT', {month:'long', year:'numeric'});
+  let days = '';
+  ['L','M','M','G','V','S','D'].forEach(d=>days += `<div class="cal-head">${d}</div>`);
+  for(let i=startDay-1;i>=0;i--) days += `<div class="cal-day other">${daysInPrevMonth-i}</div>`;
+  for(let d=1;d<=daysInMonth;d++) days += `<div class="cal-day${d===today?' today':''}">${d}</div>`;
+  const remaining = 42 - (startDay + daysInMonth);
+  for(let d=1;d<=remaining;d++) days += `<div class="cal-day other">${d}</div>`;
+  openModal('📅 Calendario', `<div style="text-align:center;font-size:18px;font-weight:600;text-transform:capitalize;margin-bottom:10px">${monthName}</div><div class="calendar-grid">${days}</div>`);
+}
+
+function openWorldClock(){
+  function render(){
+    const items = WORLD_CITIES.map(c=>{
+      const time = new Date().toLocaleTimeString('it-IT', {timeZone:c.tz, hour:'2-digit', minute:'2-digit', second:'2-digit'});
+      const date = new Date().toLocaleDateString('it-IT', {timeZone:c.tz, weekday:'short'});
+      return `<div class="world-clock-item"><div><div class="world-city">${c.name}</div><div class="world-zone">${date}</div></div><div class="world-time">${time}</div></div>`;
+    }).join('');
+    modalBody.innerHTML = items;
+  }
+  openModal('🌍 Ore del Mondo', '');
+  render();
+  const interval = setInterval(render, 1000);
+  modalCleanup = ()=>clearInterval(interval);
+}
+
+function openContacts(){renderContacts()}
+function renderContacts(){
+  const contacts = prefs.contacts || [];
+  const list = contacts.map((c,i)=>{
+    const initials = c.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+    return `<div class="list-item"><div class="contact-avatar">${initials}</div><div class="content"><div><strong>${escapeHtml(c.name)}</strong></div><div class="time">${escapeHtml(c.phone)}</div></div><button class="del-btn" data-idx="${i}">✕</button></div>`;
+  }).join('');
+  openModal('👤 Contatti', `<div>${list || '<div style="text-align:center;color:rgba(255,255,255,.6);padding:20px">Nessun contatto</div>'}</div><div class="input-area" style="flex-direction:column"><input type="text" id="cName" placeholder="Nome"><input type="tel" id="cPhone" placeholder="Telefono"><button id="cSave">Aggiungi</button></div>`);
+  document.querySelectorAll('.del-btn').forEach(b=>{b.addEventListener('click', function(){prefs.contacts.splice(+this.dataset.idx, 1);savePrefs();renderContacts()})});
+  document.getElementById('cSave').addEventListener('click', ()=>{
+    const name = document.getElementById('cName').value.trim();const phone = document.getElementById('cPhone').value.trim();
+    if(!name || !phone) return;
+    prefs.contacts.push({name, phone});savePrefs();renderContacts();
+  });
+}
+
+function openVoice(){renderVoiceNotes()}
+function renderVoiceNotes(){
+  const notes = prefs.voiceNotes || [];
+  const list = notes.map((n,i)=>`<div class="list-item"><div class="content"><audio controls src="${n.audio}" style="width:100%;height:32px"></audio><div class="time">${new Date(n.time).toLocaleString('it-IT')}</div></div><button class="del-btn" data-idx="${i}">✕</button></div>`).join('');
+  openModal('🎤 Note Vocali', `<div style="text-align:center;margin-bottom:16px"><button class="big-btn primary" id="recStart" style="padding:16px 32px">🎤 Registra</button><div id="recStatus" style="margin-top:8px;font-size:13px;color:rgba(255,255,255,.7)">Pronto</div></div><div>${list || '<div style="text-align:center;color:rgba(255,255,255,.6);padding:16px">Nessuna registrazione</div>'}</div>`);
+  document.querySelectorAll('.del-btn').forEach(b=>{b.addEventListener('click', function(){prefs.voiceNotes.splice(+this.dataset.idx, 1);savePrefs();renderVoiceNotes()})});
+  let mediaRecorder, audioChunks = [];
+  document.getElementById('recStart').addEventListener('click', async (e)=>{
+    if(!mediaRecorder || mediaRecorder.state === 'inactive'){
+      try{
+        const stream = await navigator.mediaDevices.getUserMedia({audio:true});
+        mediaRecorder = new MediaRecorder(stream);audioChunks = [];
+        mediaRecorder.ondataavailable = e=>audioChunks.push(e.data);
+        mediaRecorder.onstop = ()=>{
+          const blob = new Blob(audioChunks, {type:'audio/webm'});
+          const reader = new FileReader();
+          reader.onload = ev=>{
+            prefs.voiceNotes.unshift({audio:ev.target.result, time:Date.now()});
+            savePrefs();stream.getTracks().forEach(t=>t.stop());renderVoiceNotes();
+          };
+          reader.readAsDataURL(blob);
+        };
+        mediaRecorder.start();
+        e.target.textContent = '⏹️ Stop';e.target.style.background = '#ef4444';
+        document.getElementById('recStatus').innerHTML = '<span class="rec-indicator"></span>Registrazione...';
+      }catch(err){showToast('❌ Microfono non disponibile')}
+    } else {
+      mediaRecorder.stop();
+      e.target.textContent = '🎤 Registra';e.target.style.background = 'var(--accent)';
+      document.getElementById('recStatus').textContent = 'Salvataggio...';
+    }
+  });
+}
+
+async function openWeatherDetail(){
+  openModal('🌦️ Meteo Dettagliato', '<div style="text-align:center;padding:30px"><div class="loading"></div></div>');
+  if(!navigator.geolocation){modalBody.innerHTML = '<div style="text-align:center;color:#ef4444">Non disponibile</div>';return}
+  navigator.geolocation.getCurrentPosition(async (pos)=>{
+    const {latitude, longitude} = pos.coords;
+    try{
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_sum,wind_speed_10m_max&timezone=auto&forecast_days=7`;
+      const res = await fetch(url);const data = await res.json();
+      const days = data.daily.time.map((t,i)=>{
+        const date = new Date(t);
+        const dayName = date.toLocaleDateString('it-IT', {weekday:'short', day:'numeric'});
+        const wmo = WMO_CODES[data.daily.weather_code[i]] || {d:'N/D',i:'🌤️'};
+        const max = Math.round(data.daily.temperature_2m_max[i]);
+        const min = Math.round(data.daily.temperature_2m_min[i]);
+        const precip = data.daily.precipitation_sum[i];
+        const wind = Math.round(data.daily.wind_speed_10m_max[i]);
+        return `<div class="list-item"><div style="font-size:13px;width:70px">${dayName}</div><div style="font-size:26px">${wmo.i}</div><div style="flex:1;text-align:right"><div style="font-weight:700">${max}° <span style="opacity:.6">${min}°</span></div><div style="font-size:10px;color:rgba(255,255,255,.6)">💧${precip}mm 💨${wind}km/h</div></div></div>`;
+      }).join('');
+      modalBody.innerHTML = `<div style="font-size:14px;font-weight:600;margin-bottom:10px">Previsioni 7 giorni</div>${days}`;
+    }catch(e){modalBody.innerHTML = '<div style="text-align:center;color:#ef4444">Errore caricamento</div>'}
+  }, ()=>{modalBody.innerHTML = '<div style="text-align:center;color:#ef4444">Posizione non autorizzata</div>'});
+}
+
+function openDice(){
+  let dice = [1,1];
+  function render(){
+    const emojis = ['','⚀','⚁','⚂','⚃','⚄','⚅'];
+    openModal('🎲 Dadi', `<div style="text-align:center;padding:16px 0"><div style="font-size:80px;display:flex;justify-content:center;gap:20px">${emojis[dice[0]]} ${emojis[dice[1]]}</div><div style="font-size:24px;margin-top:10px">Totale: <strong>${dice[0]+dice[1]}</strong></div><button class="big-btn primary" style="margin-top:20px" id="rollDice">🎲 Lancia</button></div>`);
+    document.getElementById('rollDice').addEventListener('click', ()=>{dice = [Math.floor(Math.random()*6)+1, Math.floor(Math.random()*6)+1];render()});
+  }
+  render();
+}
+
+function openDecision(){
+  openModal('🎯 Decision Maker', `<div style="text-align:center;padding:10px 0"><textarea id="decOptions" placeholder="Opzione 1&#10;Opzione 2&#10;Opzione 3" style="width:100%;padding:12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:10px;color:white;font-size:14px;min-height:120px;font-family:inherit;resize:none"></textarea><div id="decResult" style="font-size:28px;font-weight:700;margin:16px 0;min-height:40px;color:var(--accent)"></div><button class="big-btn primary" id="decBtn">🎯 Scegli per me!</button></div>`);
+  document.getElementById('decBtn').addEventListener('click', ()=>{
+    const options = document.getElementById('decOptions').value.split('\n').map(s=>s.trim()).filter(s=>s);
+    if(options.length < 2){showToast('Inserisci almeno 2 opzioni');return}
+    document.getElementById('decResult').textContent = options[Math.floor(Math.random()*options.length)];
+  });
+}
+
+async function openCurrency(){
+  openModal('💱 Cambio Valuta', '<div style="text-align:center;padding:30px"><div class="loading"></div></div>');
+  try{
+    const res = await fetch('https://api.exchangerate-api.com/v4/latest/EUR');
+    const data = await res.json();
+    const rates = data.rates;
+    const currencies = ['USD','GBP','CHF','JPY','CNY','CAD','AUD'];
+    modalBody.innerHTML = `<div style="font-size:13px;color:rgba(255,255,255,.7);margin-bottom:10px">Base: 1 EUR</div>${currencies.map(c=>`<div class="list-item"><div style="font-weight:600">${c}</div><div style="font-family:'Space Mono',monospace;font-weight:700">${rates[c]?.toFixed(4) || 'N/D'}</div></div>`).join('')}`;
+  }catch(e){modalBody.innerHTML = '<div style="text-align:center;color:#ef4444">Errore caricamento</div>'}
+}
+
+function openCalc(){
+  openModal('🧮 Calcolatrice', `<div class="calc-display" id="calcDisplay">0</div><div class="calc-grid"><button class="calc-btn clr" data-v="C">C</button><button class="calc-btn op" data-v="(">(</button><button class="calc-btn op" data-v=")">)</button><button class="calc-btn op" data-v="/">÷</button><button class="calc-btn" data-v="7">7</button><button class="calc-btn" data-v="8">8</button><button class="calc-btn" data-v="9">9</button><button class="calc-btn op" data-v="*">×</button><button class="calc-btn" data-v="4">4</button><button class="calc-btn" data-v="5">5</button><button class="calc-btn" data-v="6">6</button><button class="calc-btn op" data-v="-">−</button><button class="calc-btn" data-v="1">1</button><button class="calc-btn" data-v="2">2</button><button class="calc-btn" data-v="3">3</button><button class="calc-btn op" data-v="+">+</button><button class="calc-btn" data-v="0">0</button><button class="calc-btn" data-v=".">.</button><button class="calc-btn eq" data-v="=">=</button></div>`);
+  let expr = '';
+  const display = document.getElementById('calcDisplay');
+  document.querySelectorAll('.calc-btn').forEach(btn=>{
+    btn.addEventListener('click', function(){
+      const v = this.dataset.v;
+      if(v === 'C'){expr = '';display.textContent = '0'}
+      else if(v === '='){
+        try{
+          if(!/^[-+*/().\d\s]+$/.test(expr)) throw new Error();
+          const result = Function(`"use strict"; return (${expr})`)();
+          display.textContent = String(+result.toFixed(8));expr = String(result);
+        }catch(e){display.textContent = 'Errore';expr = ''}
+      } else {expr += v;display.textContent = expr.replace(/\*/g,'×').replace(/\//g,'÷')}
+    });
+  });
+}
+
+function openChrono(){
+  openModal('⏱️ Cronometro', `<div class="big-display"><span id="chronoMain">00:00</span><span class="sub" id="chronoMs">.00</span></div><div class="btn-row"><button class="big-btn secondary" id="chronoReset">Reset</button><button class="big-btn primary" id="chronoStart">Start</button></div>`);
+  let running = false, startTime = 0, elapsed = 0, interval;
+  const mainEl = document.getElementById('chronoMain');
+  const msEl = document.getElementById('chronoMs');
+  const startBtn = document.getElementById('chronoStart');
+  function format(ms){const m = Math.floor(ms/60000);const s = Math.floor((ms%60000)/1000);const cs = Math.floor((ms%1000)/10);return {main:`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`, ms:`.${String(cs).padStart(2,'0')}`}}
+  function update(){const total = elapsed + (running ? Date.now() - startTime : 0);const f = format(total);mainEl.textContent = f.main;msEl.textContent = f.ms}
+  startBtn.addEventListener('click', ()=>{
+    if(!running){running = true;startTime = Date.now();startBtn.textContent = 'Stop';startBtn.style.background = '#ef4444';interval = setInterval(update, 30)}
+    else{running = false;elapsed += Date.now() - startTime;startBtn.textContent = 'Start';startBtn.style.background = 'var(--accent)';clearInterval(interval);update()}
+  });
+  document.getElementById('chronoReset').addEventListener('click', ()=>{running = false;elapsed = 0;clearInterval(interval);mainEl.textContent = '00:00';msEl.textContent = '.00';startBtn.textContent = 'Start';startBtn.style.background = 'var(--accent)'});
+  modalCleanup = ()=>clearInterval(interval);
+}
+
+function openNotes(){renderNotes()}
+function renderNotes(){
+  const notes = prefs.notes || [];
+  const list = notes.map((n,i)=>`<div class="list-item"><div class="content"><div>${escapeHtml(n.text)}</div><div class="time">${new Date(n.time).toLocaleString('it-IT')}</div></div><button class="del-btn" data-idx="${i}">✕</button></div>`).join('');
+  openModal('📝 Note', `<div>${list || '<div style="text-align:center;color:rgba(255,255,255,.6);padding:20px">Nessuna nota</div>'}</div><div class="input-area"><textarea id="noteInput" placeholder="Scrivi..."></textarea><button id="noteSave">Salva</button></div>`);
+  document.querySelectorAll('.del-btn').forEach(b=>{b.addEventListener('click', function(){prefs.notes.splice(+this.dataset.idx, 1);savePrefs();renderNotes()})});
+  document.getElementById('noteSave').addEventListener('click', ()=>{
+    const text = document.getElementById('noteInput').value.trim();
+    if(!text) return;
+    prefs.notes.unshift({text, time:Date.now()});savePrefs();showToast('✅ Salvata');renderNotes();
+  });
+}
+
+function openTodo(){renderTodo()}
+function renderTodo(){
+  const todos = prefs.todos || [];
+  const list = todos.map((t,i)=>`<div class="list-item" style="${t.done?'opacity:.5':''}"><div style="width:22px;height:22px;border-radius:50%;border:2px solid var(--accent);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;${t.done?'background:var(--accent);color:white':''}" data-toggle="${i}">${t.done?'✓':''}</div><div class="content" style="${t.done?'text-decoration:line-through':''}">${escapeHtml(t.text)}</div><button class="del-btn" data-idx="${i}">✕</button></div>`).join('');
+  openModal('✅ Todo', `<div>${list || '<div style="text-align:center;color:rgba(255,255,255,.6);padding:20px">Nessun task</div>'}</div><div class="input-area"><input type="text" id="todoInput" placeholder="Nuovo task..."><button id="todoAdd">+</button></div>`);
+  document.querySelectorAll('[data-toggle]').forEach(el=>{el.addEventListener('click', function(){prefs.todos[+this.dataset.toggle].done = !prefs.todos[+this.dataset.toggle].done;savePrefs();renderTodo()})});
+  document.querySelectorAll('.del-btn').forEach(b=>{b.addEventListener('click', function(){prefs.todos.splice(+this.dataset.idx, 1);savePrefs();renderTodo()})});
+  document.getElementById('todoAdd').addEventListener('click', ()=>{
+    const text = document.getElementById('todoInput').value.trim();
+    if(!text) return;
+    prefs.todos.push({text, done:false});savePrefs();renderTodo();
+  });
+  document.getElementById('todoInput').addEventListener('keypress', e=>{if(e.key === 'Enter') document.getElementById('todoAdd').click()});
+}
+
+function openCounter(){
+  openModal('🔢 Contatore', `<div class="counter-display" id="counterDisplay">${prefs.counter || 0}</div><div class="btn-row"><button class="counter-btn minus" id="counterMinus">−</button><button class="counter-btn reset" id="counterReset">↺</button><button class="counter-btn plus" id="counterPlus">+</button></div>`);
+  function update(){document.getElementById('counterDisplay').textContent = prefs.counter;savePrefs()}
+  document.getElementById('counterPlus').addEventListener('click', ()=>{prefs.counter++;update()});
+  document.getElementById('counterMinus').addEventListener('click', ()=>{prefs.counter--;update()});
+  document.getElementById('counterReset').addEventListener('click', ()=>{prefs.counter = 0;update()});
+}
+
+function openQuote(){renderQuote()}
+function renderQuote(){
+  const q = QUOTES[Math.floor(Math.random()*QUOTES.length)];
+  openModal('💬 Citazione', `<div style="padding:20px 0;text-align:center"><div style="font-size:18px;font-style:italic;line-height:1.6;margin-bottom:12px">"${q.t}"</div><div style="font-size:14px;color:rgba(255,255,255,.7)">— ${q.a}</div><button class="big-btn primary" id="quoteRefresh" style="margin-top:20px">🔄 Nuova</button></div>`);
+  document.getElementById('quoteRefresh').addEventListener('click', renderQuote);
+}
+
+function openQR(){
+  const url = window.location.href || 'https://sandro.app';
+  openModal('📱 QR Code', `<div style="text-align:center;padding:16px 0"><div style="background:white;padding:16px;border-radius:12px;display:inline-block"><img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}" alt="QR"></div><div style="margin-top:12px;font-size:11px;color:rgba(255,255,255,.7);word-break:break-all">${url}</div><button class="big-btn primary" id="qrCustom" style="margin-top:12px">Testo custom</button></div>`);
+  document.getElementById('qrCustom').addEventListener('click', ()=>{
+    const text = prompt('Testo o URL:', url);
+    if(text) openQR();
+  });
+}
+
+async function openCrypto(){
+  openModal('💰 Crypto', '<div style="text-align:center;padding:30px"><div class="loading"></div></div>');
+  try{
+    const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana,ripple,dogecoin,cardano&vs_currencies=eur&include_24hr_change=true');
+    const data = await res.json();
+    const coins = [
+      {id:'bitcoin',name:'Bitcoin',symbol:'BTC',color:'#f7931a',emoji:'₿'},
+      {id:'ethereum',name:'Ethereum',symbol:'ETH',color:'#627eea',emoji:'Ξ'},
+      {id:'solana',name:'Solana',symbol:'SOL',color:'#14f195',emoji:'◎'},
+      {id:'ripple',name:'XRP',symbol:'XRP',color:'#00aae4',emoji:'✕'},
+      {id:'dogecoin',name:'Dogecoin',symbol:'DOGE',color:'#c3a634',emoji:'Ð'},
+      {id:'cardano',name:'Cardano',symbol:'ADA',color:'#0033ad',emoji:'₳'}
+    ];
+    modalBody.innerHTML = coins.map(c=>{
+      const d = data[c.id];if(!d) return '';
+      const change = d.eur_24h_change || 0;const up = change >= 0;
+      return `<div class="crypto-item"><div class="crypto-info"><div class="crypto-logo" style="background:${c.color};color:white">${c.emoji}</div><div><div class="crypto-name">${c.name}</div><div class="crypto-symbol">${c.symbol}</div></div></div><div><div class="crypto-value">€${d.eur.toLocaleString('it-IT',{maximumFractionDigits:2})}</div><div class="crypto-change ${up?'up':'down'}">${up?'▲':'▼'} ${Math.abs(change).toFixed(2)}%</div></div></div>`;
+    }).join('');
+  }catch(e){modalBody.innerHTML = '<div style="text-align:center;color:#ef4444">Errore caricamento</div>'}
+}
+
+async function openBattery(){
+  openModal('🔋 Batteria', '<div style="text-align:center;padding:20px"><div class="loading"></div></div>');
+  if('getBattery' in navigator){
+    const batt = await navigator.getBattery();
+    const level = Math.round(batt.level*100);
+    const charging = batt.charging;
+    const color = level > 30 ? '#4ade80' : level > 15 ? '#fbbf24' : '#ef4444';
+    let timeText = 'N/D';
+    if(charging && batt.chargingTime && batt.chargingTime !== Infinity){const m = Math.round(batt.chargingTime/60);timeText = `${Math.floor(m/60)}h ${m%60}m`}
+    else if(!charging && batt.dischargingTime && batt.dischargingTime !== Infinity){const m = Math.round(batt.dischargingTime/60);timeText = `${Math.floor(m/60)}h ${m%60}m`}
+    modalBody.innerHTML = `<div style="text-align:center;padding:16px 0"><div class="battery-big"><div class="battery-big-fill" style="width:${level}%;background:${color}"></div></div><div style="font-size:48px;font-weight:200;color:${color}">${level}%</div><div style="font-size:14px;color:rgba(255,255,255,.7);margin-top:6px">${charging?'⚡ In carica':'🔋 Non in carica'}</div><div class="info-box" style="margin-top:14px"><div><strong>Tempo:</strong> ${timeText}</div><div><strong>Salute:</strong> <span style="color:${color}">${level > 50?'Ottima':level > 20?'Media':'Bassa'}</span></div></div></div>`;
+  } else modalBody.innerHTML = '<div style="text-align:center;color:#ef4444">Non disponibile</div>';
+}
+
+function openPassword(){
+  openModal('🔐 Password', `<div style="padding:12px 0"><div style="background:rgba(0,0,0,.4);padding:14px;border-radius:10px;font-family:'Space Mono',monospace;font-size:16px;word-break:break-all;text-align:center;min-height:50px" id="pwdDisplay">Genera...</div><div style="margin:10px 0"><label style="font-size:13px">Lunghezza: <span id="pwdLenVal">16</span></label><input type="range" id="pwdLen" min="6" max="32" value="16" style="width:100%"><label style="display:block;margin:6px 0;font-size:13px"><input type="checkbox" id="pwdUpper" checked> Maiuscole</label><label style="display:block;margin:6px 0;font-size:13px"><input type="checkbox" id="pwdNum" checked> Numeri</label><label style="display:block;margin:6px 0;font-size:13px"><input type="checkbox" id="pwdSym" checked> Simboli</label></div><div class="btn-row"><button class="big-btn primary" id="pwdGen">🎲 Genera</button><button class="big-btn secondary" id="pwdCopy" style="background:#22d3ee">📋 Copia</button></div></div>`);
+  const lenEl = document.getElementById('pwdLen');
+  const lenVal = document.getElementById('pwdLenVal');
+  lenEl.addEventListener('input', ()=>lenVal.textContent = lenEl.value);
+  function generate(){
+    const len = +lenEl.value;
+    let chars = 'abcdefghijklmnopqrstuvwxyz';
+    if(document.getElementById('pwdUpper').checked) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    if(document.getElementById('pwdNum').checked) chars += '0123456789';
+    if(document.getElementById('pwdSym').checked) chars += '!@#$%^&*()_+-=[]{}|;:,.<>?';
+    let pwd = '';
+    const arr = new Uint32Array(len);
+    crypto.getRandomValues(arr);
+    for(let i=0;i<len;i++) pwd += chars[arr[i] % chars.length];
+    document.getElementById('pwdDisplay').textContent = pwd;
+  }
+  document.getElementById('pwdGen').addEventListener('click', generate);
+  document.getElementById('pwdCopy').addEventListener('click', async ()=>{
+    const pwd = document.getElementById('pwdDisplay').textContent;
+    if(pwd === 'Genera...') return;
+    try{await navigator.clipboard.writeText(pwd);showToast('📋 Copiata!')}catch(e){showToast('⚠️ Errore')}
+  });
+  generate();
+}
+
+function openConverter(){
+  const units = {
+    length:{m:1,km:1000,cm:0.01,mm:0.001,mi:1609.34,ft:0.3048,in:0.0254},
+    weight:{kg:1,g:0.001,mg:0.000001,lb:0.453592,oz:0.0283495},
+    temp:{c:'c',f:'f',k:'k'},
+    volume:{l:1,ml:0.001,gal:3.78541,cup:0.24}
+  };
+  openModal('🔄 Convertitore', `<select id="convType" style="width:100%;padding:10px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:8px;color:white;margin-bottom:10px"><option value="length">Lunghezza</option><option value="weight">Peso</option><option value="temp">Temperatura</option><option value="volume">Volume</option></select><div class="converter-row"><input type="number" id="convFrom" value="1"><select id="convUnitFrom"></select></div><div style="text-align:center;font-size:20px">↓</div><div class="converter-row"><select id="convUnitTo"></select></div><div class="converter-result" id="convResult">--</div>`);
+  function updateUnits(){
+    const type = document.getElementById('convType').value;
+    const uFrom = document.getElementById('convUnitFrom');
+    const uTo = document.getElementById('convUnitTo');
+    const keys = Object.keys(units[type]);
+    uFrom.innerHTML = keys.map(k=>`<option value="${k}">${k}</option>`).join('');
+    uTo.innerHTML = keys.map((k,i)=>`<option value="${k}" ${i===1?'selected':''}>${k}</option>`).join('');
+    convert();
+  }
+  function convert(){
+    const type = document.getElementById('convType').value;
+    const val = parseFloat(document.getElementById('convFrom').value) || 0;
+    const from = document.getElementById('convUnitFrom').value;
+    const to = document.getElementById('convUnitTo').value;
+    let result;
+    if(type === 'temp'){
+      let c;
+      if(from === 'c') c = val;else if(from === 'f') c = (val-32)*5/9;else c = val - 273.15;
+      if(to === 'c') result = c;else if(to === 'f') result = c*9/5 + 32;else result = c + 273.15;
+    } else result = val * units[type][from] / units[type][to];
+    document.getElementById('convResult').textContent = `${val} ${from} = ${result.toFixed(4)} ${to}`;
+  }
+  document.getElementById('convType').addEventListener('change', updateUnits);
+  document.getElementById('convFrom').addEventListener('input', convert);
+  document.getElementById('convUnitFrom').addEventListener('change', convert);
+  document.getElementById('convUnitTo').addEventListener('change', convert);
+  updateUnits();
+}
+
+function openColor(){
+  openModal('🎨 Colori', `<div style="padding:10px 0"><div class="color-preview" id="colorPreview" style="background:#4ade80"></div><input type="color" id="colorInput" value="#4ade80" style="width:100%;height:45px;border:none;border-radius:10px;cursor:pointer"><div class="color-values" style="margin-top:10px"><div class="color-val" id="colorHex">#4ade80</div><div class="color-val" id="colorRgb">rgb(74,222,128)</div></div><button class="big-btn primary" id="colorCopy" style="width:100%;margin-top:12px">📋 Copia HEX</button></div>`);
+  const input = document.getElementById('colorInput');
+  const preview = document.getElementById('colorPreview');
+  const hexEl = document.getElementById('colorHex');
+  const rgbEl = document.getElementById('colorRgb');
+  function update(){
+    const hex = input.value;
+    preview.style.background = hex;hexEl.textContent = hex;
+    const r = parseInt(hex.substr(1,2),16);const g = parseInt(hex.substr(3,2),16);const b = parseInt(hex.substr(5,2),16);
+    rgbEl.textContent = `rgb(${r},${g},${b})`;
+  }
+  input.addEventListener('input', update);
+  document.getElementById('colorCopy').addEventListener('click', async ()=>{
+    try{await navigator.clipboard.writeText(input.value);showToast('📋 Copiato!')}catch(e){showToast('⚠️ Errore')}
+  });
+}
+
+async function openFlashlight(){
+  openModal('💡 Torcia', `<div style="text-align:center;padding:30px 0"><button class="big-btn primary" id="torchBtn" style="width:120px;height:120px;border-radius:50%;font-size:50px">💡</button><div style="margin-top:14px;font-size:13px;color:rgba(255,255,255,.7)" id="torchStatus">Premi per accendere</div></div>`);
+  let torchOn = false, stream = null, track = null;
+  document.getElementById('torchBtn').addEventListener('click', async ()=>{
+    try{
+      if(!torchOn){
+        stream = await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});
+        track = stream.getVideoTracks()[0];
+        const cap = track.getCapabilities && track.getCapabilities();
+        if(cap && cap.torch){
+          await track.applyConstraints({advanced:[{torch:true}]});
+          torchOn = true;
+          document.getElementById('torchBtn').style.background = '#fbbf24';
+          document.getElementById('torchStatus').textContent = 'Accesa - Premi per spegnere';
+        } else {track.stop();showToast('💡 Non supportata')}
+      } else {
+        await track.applyConstraints({advanced:[{torch:false}]});
+        track.stop();torchOn = false;
+        document.getElementById('torchBtn').style.background = 'var(--accent)';
+        document.getElementById('torchStatus').textContent = 'Premi per accendere';
+      }
+    }catch(e){showToast('❌ Errore torcia')}
+  });
+  modalCleanup = ()=>{if(track) track.stop()};
+}
+
+function openNoise(){
+  openModal('🎵 Suoni Relax', `<div style="padding:10px 0"><div style="font-size:13px;color:rgba(255,255,255,.7);margin-bottom:10px">Scegli un suono:</div><div class="list-item" data-sound="rain" style="cursor:pointer">🌧️ Pioggia</div><div class="list-item" data-sound="waves" style="cursor:pointer">🌊 Onde</div><div class="list-item" data-sound="forest" style="cursor:pointer">🌲 Foresta</div><div class="list-item" data-sound="fire" style="cursor:pointer">🔥 Fuoco</div><div class="list-item" data-sound="stop" style="cursor:pointer;background:rgba(239,68,68,.2)">⏹️ Stop</div><div id="noiseStatus" style="text-align:center;margin-top:10px;font-size:13px;color:rgba(255,255,255,.7)">Nessun suono attivo</div></div>`);
+  let audio = null;
+  const sounds = {
+    rain:'https://cdn.pixabay.com/audio/2022/03/10/audio_d1718ab41b.mp3',
+    waves:'https://cdn.pixabay.com/audio/2022/06/07/audio_c2c7d87d82.mp3',
+    forest:'https://cdn.pixabay.com/audio/2022/03/15/audio_1255d51e02.mp3',
+    fire:'https://cdn.pixabay.com/audio/2021/08/08/audio_dc39536c1a.mp3'
+  };
+  document.querySelectorAll('[data-sound]').forEach(el=>{
+    el.addEventListener('click', function(){
+      const s = this.dataset.sound;
+      if(audio){audio.pause();audio=null}
+      if(s !== 'stop' && sounds[s]){
+        audio = new Audio(sounds[s]);audio.loop = true;audio.volume = 0.5;
+        audio.play().catch(()=>{});
+        document.getElementById('noiseStatus').textContent = '▶️ In riproduzione...';
+      } else document.getElementById('noiseStatus').textContent = 'Fermato';
+    });
+  });
+  modalCleanup = ()=>{if(audio){audio.pause();audio=null}};
+}
+
+function openSettings(){
+  const storageUsed = getStorageUsed();
+  const usedMB = (storageUsed / 1024 / 1024).toFixed(2);
+  const usedKB = (storageUsed / 1024).toFixed(1);
+  const storagePct = Math.min((storageUsed / (5 * 1024 * 1024)) * 100, 100);
+  const storageClass = storagePct > 80 ? 'danger' : storagePct > 50 ? 'warning' : '';
+  const storageText = storageUsed > 1024*1024 ? `${usedMB} MB` : `${usedKB} KB`;
+  const customIconsCount = Object.keys(prefs.customIcons || {}).length;
+  
+  openModal('⚙️ Impostazioni', `
+    <div class="settings-section">
+      <div class="section-title">💾 Spazio e Dati</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.7);margin-bottom:6px">
+        Spazio usato: <strong style="color:var(--accent)">${storageText}</strong> / 5 MB (${storagePct.toFixed(1)}%)
+      </div>
+      <div class="storage-bar"><div class="storage-fill ${storageClass}" style="width:${storagePct}%"></div></div>
+      <div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:6px">
+        Icone custom: ${customIconsCount} · Sfondo: ${prefs.bgImage ? 'Personalizzato' : 'Gradiente'}
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-top:10px">
+        <button class="upload-bg-btn" id="compressAll" style="border-color:rgba(74,222,128,.5);color:var(--accent)">🗜️ Comprimi tutte le icone</button>
+        <button class="upload-bg-btn" id="clearIcons" style="border-color:rgba(251,191,36,.5);color:#fbbf24">🧹 Cancella tutte le icone custom</button>
+        <button class="upload-bg-btn" id="resetAll" style="border-color:rgba(239,68,68,.5);color:#ef4444">⚠️ Reset completo app</button>
+      </div>
+    </div>
+    <div class="settings-section">
+      <div class="section-title">🕐 Stile Orologio</div>
+      <div class="style-options">${CLOCK_STYLES.map(s=>`<button class="style-btn${prefs.clockStyle === s.id ? ' active' : ''}" data-clock="${s.id}">${s.label}</button>`).join('')}</div>
+    </div>
+    <div class="settings-section">
+      <div class="section-title">🔤 Font</div>
+      <div class="font-grid" id="fontGrid"></div>
+    </div>
+    <div class="settings-section">
+      <div class="section-title">📏 Dimensione testo</div>
+      <input type="range" id="sizeSlider" min="0.8" max="1.4" step="0.05" value="${prefs.scale}">
+      <div style="display:flex;justify-content:space-between;font-size:10px;opacity:.7"><span>Piccolo</span><span>Medio</span><span>Grande</span></div>
+    </div>
+    <div class="settings-section">
+      <div class="section-title">🎨 Sfondo</div>
+      <div class="bg-options">
+        <button class="bg-opt" data-bg="dynamic" style="background:conic-gradient(#ff9a9e,#4facfe,#43e97b,#fa709a,#667eea,#0f0c29)"></button>
+        <button class="bg-opt" data-bg="ocean" style="background:linear-gradient(135deg,#2E3192,#1BFFFF)"></button>
+        <button class="bg-opt" data-bg="sunset" style="background:linear-gradient(135deg,#ff512f,#f09819)"></button>
+        <button class="bg-opt" data-bg="forest" style="background:linear-gradient(135deg,#134E5E,#71B280)"></button>
+        <button class="bg-opt" data-bg="night" style="background:linear-gradient(135deg,#0f0c29,#302b63)"></button>
+        <button class="bg-opt" data-bg="rose" style="background:linear-gradient(135deg,#ee9ca7,#ffdde1)"></button>
+        <button class="bg-opt" data-bg="aurora" style="background:linear-gradient(135deg,#00c9ff,#92fe9d)"></button>
+        <button class="bg-opt" data-bg="lava" style="background:linear-gradient(135deg,#f5af19,#f12711)"></button>
+        <button class="bg-opt" data-bg="galaxy" style="background:linear-gradient(135deg,#1e3c72,#2a5298,#7e3ff2)"></button>
+      </div>
+      <button class="upload-bg-btn" id="uploadBgBtn">📷 Carica immagine (max 2MB)</button>
+      <input type="file" id="bgFileInput" accept="image/*" style="display:none">
+      ${prefs.bgImage?'<button class="upload-bg-btn" id="removeBgBtn" style="border-color:rgba(239,68,68,.5);color:#ef4444">🗑️ Rimuovi immagine</button>':''}
+    </div>
+    <div class="settings-section">
+      <div class="section-title">🎨 Personalizza Icone Widget</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.7);margin-bottom:10px">
+        Tocca un widget per caricare un'icona personalizzata.<br>
+        <strong style="color:var(--accent)">💾 Le icone vengono salvate automaticamente!</strong>
+      </div>
+      <div class="icon-grid" id="iconGrid"></div>
+      <input type="file" id="iconFileInput" accept="image/*" style="display:none">
+    </div>
+    <div class="settings-section">
+      <div class="section-title">ℹ️ Info</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.7);line-height:1.6">
+        <div><strong>SANDRO MULTIAPP PRO</strong></div>
+        <div>Versione 12.0 · 34 Widget · Font Inter</div>
+        <div style="margin-top:4px">Tutti i dati salvati nel dispositivo</div>
+      </div>
+    </div>
+  `);
+  
+  document.querySelectorAll('[data-clock]').forEach(b=>{
+    b.addEventListener('click', function(){
+      prefs.clockStyle = this.dataset.clock;savePrefs();applyPrefs();
+      document.querySelectorAll('[data-clock]').forEach(x=>x.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+  
+  const fontGrid = document.getElementById('fontGrid');
+  FONTS.forEach(f=>{
+    const btn = document.createElement('button');
+    btn.className = 'font-btn' + (prefs.font === f.family ? ' active' : '');
+    btn.style.fontFamily = f.family;
+    btn.innerHTML = `Aa<span class="font-name">${f.label}</span>`;
+    btn.addEventListener('click', function(){
+      prefs.font = f.family;savePrefs();applyPrefs();
+      document.querySelectorAll('.font-btn').forEach(b=>b.classList.remove('active'));
+      this.classList.add('active');
+    });
+    fontGrid.appendChild(btn);
+  });
+  
+  document.getElementById('sizeSlider').addEventListener('input', function(){
+    prefs.scale = parseFloat(this.value);savePrefs();applyPrefs();
+  });
+  
+  document.querySelectorAll('.bg-opt').forEach(b=>{
+    if(b.dataset.bg === prefs.bg && !prefs.bgImage) b.classList.add('active');
+    b.addEventListener('click', function(){
+      prefs.bg = this.dataset.bg;prefs.bgImage = null;savePrefs();applyBackground();
+      document.querySelectorAll('.bg-opt').forEach(x=>x.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+  
+  document.getElementById('uploadBgBtn').addEventListener('click', ()=>document.getElementById('bgFileInput').click());
+  document.getElementById('bgFileInput').addEventListener('change', e=>{
+    const file = e.target.files[0];
+    if(!file) return;
+    if(file.size > 2 * 1024 * 1024){showToast('⚠️ Immagine troppo grande (max 2MB)');return}
+    const reader = new FileReader();
+    reader.onload = ev=>{
+      const img = new Image();
+      img.onload = ()=>{
+        const canvas = document.createElement('canvas');
+        const MAX = 800;
+        let w = img.width, h = img.height;
+        if(w > MAX || h > MAX){if(w > h){h = Math.round(h * MAX / w); w = MAX}else{w = Math.round(w * MAX / h); h = MAX}}
+        canvas.width = w;canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        prefs.bgImage = canvas.toDataURL('image/jpeg', 0.55);
+        prefs.bg = 'custom';
+        const saved = savePrefs();
+        if(saved){showToast('✅ Sfondo impostato!')}
+        else{showToast('⚠️ Memoria piena, rimuovi icone custom')}
+        applyBackground();
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+  
+  if(document.getElementById('removeBgBtn')){
+    document.getElementById('removeBgBtn').addEventListener('click', ()=>{
+      prefs.bgImage = null;prefs.bg = 'dynamic';savePrefs();applyBackground();
+      closeModal();
+    });
+  }
+  
+  document.getElementById('compressAll').addEventListener('click', async ()=>{
+    const ok = await compressAllIcons();
+    if(ok){savePrefs();renderWidgets();openSettings();showToast('✅ Icone compresse!')}
+    else{showToast('ℹ️ Nessuna icona da comprimere')}
+  });
+  
+  document.getElementById('clearIcons').addEventListener('click', ()=>{
+    if(confirm('Cancellare tutte le icone personalizzate?')){
+      prefs.customIcons = {};savePrefs();renderWidgets();openSettings();showToast('🧹 Icone cancellate');
+    }
+  });
+  
+  document.getElementById('resetAll').addEventListener('click', ()=>{
+    if(confirm('⚠️ Cancellare TUTTI i dati dell\'app? (note, todo, icone, sfondo)')){
+      localStorage.clear();location.reload();
+    }
+  });
+  
+  const iconGrid = document.getElementById('iconGrid');
+  let currentIconTarget = null;
+  
+  WIDGETS.forEach(w=>{
+    const btn = document.createElement('button');
+    const hasCustom = !!prefs.customIcons[w.id];
+    btn.className = 'icon-edit-btn' + (hasCustom ? ' custom' : '');
+    btn.innerHTML = `<div style="width:28px;height:28px">${hasCustom ? `<img src="${prefs.customIcons[w.id]}">` : DEFAULT_ICONS[w.id]}</div><div>${w.label}</div>${hasCustom ? '<button class="icon-reset-btn" data-reset="'+w.id+'" title="Ripristina default">✕</button>' : ''}`;
+    btn.addEventListener('click', (e)=>{
+      if(e.target.classList.contains('icon-reset-btn')) return;
+      currentIconTarget = w.id;
+      document.getElementById('iconFileInput').click();
+    });
+    iconGrid.appendChild(btn);
+  });
+  
+  document.querySelectorAll('.icon-reset-btn').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const id = btn.dataset.reset;
+      delete prefs.customIcons[id];
+      savePrefs();renderWidgets();showToast('🔄 Icona ripristinata');openSettings();
+    });
+  });
+  
+  document.getElementById('iconFileInput').addEventListener('change', e=>{
+    const file = e.target.files[0];
+    if(!file || !currentIconTarget) return;
+    if(file.size > 500 * 1024){showToast('⚠️ File troppo grande (max 500KB)');return}
+    const reader = new FileReader();
+    reader.onload = ev=>{
+      const img = new Image();
+      img.onload = ()=>{
+        const canvas = document.createElement('canvas');
+        canvas.width = 64;canvas.height = 64;
+        canvas.getContext('2d').drawImage(img, 0, 0, 64, 64);
+        prefs.customIcons[currentIconTarget] = canvas.toDataURL('image/jpeg', 0.8);
+        const saved = savePrefs();
+        if(saved){showToast('✅ Icona salvata!')}
+        else{showToast('⚠️ Memoria quasi piena')}
+        renderWidgets();openSettings();
+      };
+      img.src = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function applyPrefs(){
+  document.documentElement.style.setProperty('--font', prefs.font);
+  document.documentElement.style.setProperty('--scale', prefs.scale);
+  document.body.style.fontFamily = prefs.font;
+  const timeDisplay = document.getElementById('timeDisplay');
+  const analogClock = document.getElementById('analogClock');
+  const flipClock = document.getElementById('flipClock');
+  timeDisplay.className = 'time';
+  timeDisplay.style.display = '';
+  analogClock.classList.remove('active');
+  flipClock.classList.remove('active');
+  if(prefs.clockStyle === 'analog'){timeDisplay.style.display = 'none';analogClock.classList.add('active')}
+  else if(prefs.clockStyle === 'flip'){timeDisplay.style.display = 'none';flipClock.classList.add('active')}
+  else if(prefs.clockStyle !== 'digital'){timeDisplay.classList.add('s-' + prefs.clockStyle)}
+  applyBackground();
+}
+
+function applyBackground(){
+  const bgGradient = document.getElementById('bgGradient');
+  const bgImage = document.getElementById('bgImage');
+  if(prefs.bgImage){
+    bgImage.style.backgroundImage = `url(${prefs.bgImage})`;
+    bgImage.classList.add('visible');
+    bgGradient.style.opacity = '0';
+  } else {
+    bgImage.classList.remove('visible');
+    bgImage.style.backgroundImage = '';
+    bgGradient.style.opacity = '1';
+    if(prefs.bg === 'dynamic'){
+      const h = new Date().getHours();
+      let g;
+      if(h >= 5 && h < 8) g = 'linear-gradient(135deg,#ff9a9e,#fad0c4,#fbc2eb)';
+      else if(h >= 8 && h < 12) g = 'linear-gradient(135deg,#4facfe,#00f2fe)';
+      else if(h >= 12 && h < 17) g = 'linear-gradient(135deg,#43e97b,#38f9d7)';
+      else if(h >= 17 && h < 20) g = 'linear-gradient(135deg,#fa709a,#fee140)';
+      else if(h >= 20 && h < 23) g = 'linear-gradient(135deg,#667eea,#764ba2)';
+      else g = 'linear-gradient(135deg,#0f0c29,#302b63,#24243e)';
+      bgGradient.style.backgroundImage = g;
+    } else if(BG_PRESETS[prefs.bg]) bgGradient.style.backgroundImage = BG_PRESETS[prefs.bg];
+  }
+}
+
+function updateClock(){
+  const now = new Date();
+  const h = now.getHours();const m = now.getMinutes();const s = now.getSeconds();
+  const hStr = String(h).padStart(2,'0');const mStr = String(m).padStart(2,'0');const sStr = String(s).padStart(2,'0');
+  document.getElementById('hours').textContent = hStr;
+  document.getElementById('minutes').textContent = mStr;
+  if(prefs.clockStyle === 'analog'){
+    const hourDeg = (h%12)*30 + m*0.5;const minDeg = m*6 + s*0.1;const secDeg = s*6;
+    document.getElementById('handHour').style.transform = `rotate(${hourDeg}deg)`;
+    document.getElementById('handMinute').style.transform = `rotate(${minDeg}deg)`;
+    document.getElementById('handSecond').style.transform = `rotate(${secDeg}deg)`;
+  }
+  if(prefs.clockStyle === 'flip'){
+    document.getElementById('flipH').textContent = hStr;
+    document.getElementById('flipM').textContent = mStr;
+    document.getElementById('flipS').textContent = sStr;
+  }
+  const opts = {weekday:'long',day:'numeric',month:'long'};
+  document.getElementById('date').textContent = now.toLocaleDateString('it-IT', opts);
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+async function loadWeather(lat, lon){
+  try{
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&daily=uv_index_max&timezone=auto&forecast_days=1`;
+    const res = await fetch(url);
+    if(!res.ok) throw new Error();
+    const data = await res.json();
+    const c = data.current;const d = data.daily;
+    const wmo = WMO_CODES[c.weather_code] || {d:'N/D',i:'🌤️'};
+    document.getElementById('weatherIcon').textContent = wmo.i;
+    document.getElementById('weatherDesc').textContent = wmo.d;
+    document.getElementById('temp').textContent = `${Math.round(c.temperature_2m)}°`;
+    document.getElementById('humidity').textContent = `${c.relative_humidity_2m}%`;
+    document.getElementById('wind').textContent = `${Math.round(c.wind_speed_10m)} km/h`;
+    document.getElementById('feelsLike').textContent = `${Math.round(c.apparent_temperature)}°`;
+    document.getElementById('uvIndex').textContent = d.uv_index_max[0] !== undefined ? Math.round(d.uv_index_max[0]) : '--';
+  }catch(e){document.getElementById('weatherDesc').textContent = 'Errore'}
+}
+
+async function getLocationAndWeather(){
+  if(!navigator.geolocation){document.getElementById('location').textContent = 'Non disponibile';loadWeather(41.9028, 12.4964);return}
+  navigator.geolocation.getCurrentPosition(async (pos)=>{
+    const {latitude, longitude} = pos.coords;
+    try{
+      const geoRes = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&accept-language=it`);
+      const geoData = await geoRes.json();
+      const city = geoData.address.city || geoData.address.town || geoData.address.village || 'Posizione';
+      document.getElementById('location').textContent = city;
+    }catch(e){document.getElementById('location').textContent = `${latitude.toFixed(2)}°, ${longitude.toFixed(2)}°`}
+    loadWeather(latitude, longitude);
+  }, ()=>{document.getElementById('location').textContent = 'Roma';loadWeather(41.9028, 12.4964)}, {enableHighAccuracy:true, timeout:10000});
+}
+getLocationAndWeather();
+
+renderWidgets();
+applyPrefs();
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(err => console.warn('SW error:', err));
+  });
+}
+</script>
+</body>
+</html>
